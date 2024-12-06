@@ -1,5 +1,6 @@
 package com.game.object.util;
 
+import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -25,6 +26,69 @@ public class KeyInput extends KeyAdapter {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
+		
+		//TITLE STATE
+		if (gp.gameState == gp.titleState) {
+			if (gp.ui.titleScreenState == 0) {
+				if (key == KeyEvent.VK_W) {
+					gp.ui.commandNum --;
+					if (gp.ui.commandNum < 0) {
+						gp.ui.commandNum =2;
+					}
+				}
+				if (key == KeyEvent.VK_S) {
+					gp.ui.commandNum ++;
+					if (gp.ui.commandNum > 2) {
+						gp.ui.commandNum =0;
+					}
+				}
+				if (key == KeyEvent.VK_ENTER) {
+					if (gp.ui.commandNum ==0 ) {
+						gp.ui.titleScreenState = 1;
+					}
+					else if (gp.ui.commandNum == 1) {
+						
+					}
+					else if (gp.ui.commandNum == 2) {
+						System.exit(0);
+					}
+				}
+			}
+			
+			else if (gp.ui.titleScreenState == 1) {
+				if (key == KeyEvent.VK_W) {
+					gp.ui.commandNum --;
+					if (gp.ui.commandNum < 0) {
+						gp.ui.commandNum =3;
+					}
+				}
+				if (key == KeyEvent.VK_S) {
+					gp.ui.commandNum ++;
+					if (gp.ui.commandNum > 3) {
+						gp.ui.commandNum =0;
+					}
+				}
+				if (key == KeyEvent.VK_ENTER) {
+					if (gp.ui.commandNum ==0 ) {
+						gp.gameState =gp.playState;
+//						gp.playMusic(0);         //se add music sau
+					}
+					else if (gp.ui.commandNum == 1) {
+						gp.gameState =gp.playState;
+//						gp.playMusic(0);         //se add music sau
+					}
+					else if (gp.ui.commandNum == 2) {
+						gp.gameState =gp.playState;
+//						gp.playMusic(0);         //se add music sau
+					}
+					else if (gp.ui.commandNum == 3) {
+						gp.ui.titleScreenState=0;
+					}
+				}
+			}
+		}
+		
+		
 		
 		if(key == KeyEvent.VK_ESCAPE) { //VK == virtual key
 			System.exit(0);

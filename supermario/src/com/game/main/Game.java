@@ -31,7 +31,7 @@ public class Game extends Canvas implements Runnable {
     private static final int WINDOW_HEIGHT = 720;
     private static final int SCREEN_WIDTH = WINDOW_WIDTH - 67;
     private static final int SCREEN_HEIGHT = WINDOW_HEIGHT;
-    private static final int SCREEN_OFFSET = 16 * 3;
+    public  final int SCREEN_OFFSET = 16 * 3;
 
     // Game variables
     private boolean running;
@@ -45,6 +45,7 @@ public class Game extends Canvas implements Runnable {
 
     // GAME STATE
     public int gameState;
+    public final int titleState = 0;
     public final int playState = 1;
     public final int pauseState = 2;
     
@@ -78,7 +79,7 @@ public class Game extends Canvas implements Runnable {
         cam = new Camera(0, SCREEN_OFFSET);
         new Windows(WINDOW_WIDTH, WINDOW_HEIGHT, NAME, this);
 
-        gameState = playState;
+        gameState = titleState;
 
         start();
     }
@@ -152,21 +153,26 @@ public class Game extends Canvas implements Runnable {
         Graphics g = buf.getDrawGraphics();
         Graphics2D g2d = (Graphics2D) g;
 
-        g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
+        // Xóa màn hình trước khi vẽ
+        g.setColor(Color.DARK_GRAY); // Hoặc màu nền mặc định
+        g.fillRect(0, 0, getWidth(), getHeight());
 
-        g2d.translate(cam.getX(), cam.getY());
-        handler.render(g);
-        g2d.translate(-cam.getX(), -cam.getY());
-        
-        ui.draw(g2d);
-        
+        if (gameState == titleState) {
+            ui.draw(g2d);
+        } else {
+            g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
+
+            g2d.translate(cam.getX(), cam.getY());
+            handler.render(g);
+            g2d.translate(-cam.getX(), -cam.getY());
+
+            ui.draw(g2d); // UI
+        }
+
         g2d.dispose();
         buf.show();
-        
-        //UI
-        
-        
     }
+
 
     public static int getWindowHeight() {
         return WINDOW_HEIGHT;
