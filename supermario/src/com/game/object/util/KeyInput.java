@@ -15,6 +15,7 @@ public class KeyInput extends KeyAdapter {
 	private Handler handler;
 	Game gp;
 	
+	//for checking
 	
 	public KeyInput(Handler handler, Game gp) {
 		this.handler = handler;
