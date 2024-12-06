@@ -3,6 +3,8 @@ package com.game.object.util;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import com.game.main.Game;
+
 
 //extending KeyAdapter allows the extending class (Keyinput) to become a KeyEvent Listener 
 // A KeyEvent Listener takes action when certain events take place (keyPress, keyRelease)
@@ -11,9 +13,12 @@ public class KeyInput extends KeyAdapter {
 	
 	private boolean[] keyDown = new boolean[4];
 	private Handler handler;
+	Game gp;
 	
-	public KeyInput(Handler handler) {
+	
+	public KeyInput(Handler handler, Game gp) {
 		this.handler = handler;
+		this.gp =gp;
 	}
 	
 	@Override
@@ -24,8 +29,15 @@ public class KeyInput extends KeyAdapter {
 			System.exit(0);
 		}
 		
+		if(key == KeyEvent.VK_P) {
+			if (gp.gameState == gp.playState) {
+				gp.gameState = gp.pauseState;
+			} else  if (gp.gameState == gp.pauseState) {
+				gp.gameState =gp.playState;
+			}
+		}
 		
-		// ý tưởng là khi thực hiện nhập từ bàn phím dichj chuyển tọa độ của obj
+		// ý tưởng là khi thực hiện nhập từ bàn phím dịch chuyển tọa độ của obj
 		// để ý tick method ở trước. ta chỉ cần update player velocity 1 cách tự động với tick 
 		
 		
@@ -75,3 +87,4 @@ public class KeyInput extends KeyAdapter {
 	}
 	
 }
+
