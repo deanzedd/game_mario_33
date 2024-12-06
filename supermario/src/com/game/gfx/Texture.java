@@ -16,7 +16,7 @@ public class Texture {
     private BufferedImage player_sheet, enemy_sheet, npc_sheet, block_sheet,
                           tile_sheet, game_over_sheet, intro_sheet;
 
-    public BufferedImage[] mario_l, mario_s, tile_1, tile_2, tile_3, tile_4, pipe_1, pipe_4, debris_1;
+    public BufferedImage[] mario_l, mario_s, tile_1, tile_2, tile_3, tile_4, pipe_1, pipe_2, debris_1;
 
     public Texture() {
         mario_l = new BufferedImage[MARIO_L_COUNT];
@@ -99,16 +99,20 @@ public class Texture {
     	}
     
     
-    private void getPipeTexture() {  // hàm này dùng cho 4 ống nước dọc dưới
+    private void getPipeTexture() {  //lấy họa tiết ống
         int x_off = 0;
         int y_off = 16 * 8;
         int width = 32;
         int height = 16;
-
+        
+        
+        //pipe_1 loại pipe màu xanh
         pipe_1[0] = tile_sheet.getSubimage(x_off, y_off, width, height);
         pipe_1[1] = tile_sheet.getSubimage(x_off, y_off + height, width, height);
         pipe_1[2] = tile_sheet.getSubimage(x_off + width, y_off, width, height);
         pipe_1[3] = tile_sheet.getSubimage(x_off + width, y_off + height, width, height);
+        
+        
     }
     
     private void getDebrisTextures() {	// Ham tao hoa tiet manh vo
@@ -146,8 +150,8 @@ public class Texture {
     public BufferedImage[] getPipe1() {
     	return pipe_1;
     }
-    public BufferedImage[] getPipe4() {
-    	return pipe_4;
+    public BufferedImage[] getPipe2() {
+    	return pipe_2;
     }
     public BufferedImage[] getDebris1() {
     	return debris_1;
