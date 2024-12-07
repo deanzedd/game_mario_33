@@ -100,10 +100,8 @@ public class KeyInput extends KeyAdapter {
 		if(key == KeyEvent.VK_P) {
 			if (gp.gameState == gp.playState) {
 				gp.gameState = gp.pauseState;
-				gp.stopMusic();
 			} else  if (gp.gameState == gp.pauseState) {
 				gp.gameState =gp.playState;
-				gp.playMusic(1);
 			}
 		}
 		
