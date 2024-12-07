@@ -71,15 +71,18 @@ public class KeyInput extends KeyAdapter {
 				if (key == KeyEvent.VK_ENTER) {
 					if (gp.ui.commandNum ==0 ) {
 						gp.gameState =gp.playState;
-//						gp.playMusic(0);         //se add music sau
+						gp.stopMusic();
+						gp.playMusic(1);         //se add music sau
 					}
 					else if (gp.ui.commandNum == 1) {
 						gp.gameState =gp.playState;
-//						gp.playMusic(0);         //se add music sau
+						gp.stopMusic();
+						gp.playMusic(1);         //se add music sau
 					}
 					else if (gp.ui.commandNum == 2) {
 						gp.gameState =gp.playState;
-//						gp.playMusic(0);         //se add music sau
+						gp.stopMusic();
+						gp.playMusic(1);         //se add music sau
 					}
 					else if (gp.ui.commandNum == 3) {
 						gp.ui.titleScreenState=0;
@@ -97,8 +100,10 @@ public class KeyInput extends KeyAdapter {
 		if(key == KeyEvent.VK_P) {
 			if (gp.gameState == gp.playState) {
 				gp.gameState = gp.pauseState;
+				gp.stopMusic();
 			} else  if (gp.gameState == gp.pauseState) {
 				gp.gameState =gp.playState;
+				gp.playMusic(1);
 			}
 		}
 		
@@ -112,6 +117,9 @@ public class KeyInput extends KeyAdapter {
 				handler.getPlayer().setVelY(-15);
 				keyDown[0] = true;
 				handler.getPlayer().setJumped(true);
+				if (gp.gameState == gp.playState ) {
+					gp.playSE(2);
+				}
 			}
 		}
 		
