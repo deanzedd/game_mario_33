@@ -65,7 +65,7 @@ public class Game extends Canvas implements Runnable {
     private void initialize() {
         playMusic(0);
     	try {
-            ImageIcon icon = new ImageIcon(getClass().getResource("/tile/backkk.jpg"));
+            ImageIcon icon = new ImageIcon(getClass().getResource("/tile/BACK2.jpg"));
             background = icon.getImage();
         } catch (NullPointerException e) {
             System.err.println("Background image not found!");

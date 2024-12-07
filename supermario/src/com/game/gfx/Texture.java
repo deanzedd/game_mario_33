@@ -50,7 +50,7 @@ public class Texture {
     
     private void getPlayerTextures() {
     	int x_off=80;  
-    	int y_off=1;   // toa do pixel bat dau. luu y chon dung toa do pixel
+    	int y_off=444;   // toa do pixel bat dau. luu y chon dung toa do pixel
     	int width=16;  // chieu dai chieu rong pixel tung khung hinh
     	int height =32;
     	
@@ -67,7 +67,7 @@ public class Texture {
     }
     private void getTileTextures() {
     	int x_off=0;  
-    	int y_off=0;   
+    	int y_off=32;   
     	int width=16;  
     	int height =16;
     	
@@ -101,7 +101,7 @@ public class Texture {
     
     private void getPipeTexture() {  //lấy họa tiết ống
         int x_off = 0;
-        int y_off = 16 * 8;
+        int y_off = 16 * 12;
         int width = 32;
         int height = 16;
         
@@ -117,7 +117,7 @@ public class Texture {
     
     private void getDebrisTextures() {	// Ham tao hoa tiet manh vo
     	int x_off = 304;
-    	int y_off = 112;
+    	int y_off = 47;
     	int width = 8;
     	int height = 8;
     	
