@@ -10,6 +10,7 @@ import java.awt.image.BufferStrategy;
 import javax.swing.ImageIcon;
 
 import com.game.gfx.Camera;
+import com.game.gfx.Sound;
 import com.game.gfx.Texture;
 import com.game.gfx.UI;
 import com.game.gfx.Windows;
@@ -51,16 +52,19 @@ public class Game extends Canvas implements Runnable {
     
     //UI
     public UI ui = new UI(this);
-
     private Image background;
-
+    
+    //SOUND
+    Sound sound = new Sound();
+    
     public static void main(String[] args) {
         Game game = new Game();
         game.initialize();
     }
 
     private void initialize() {
-        try {
+        playMusic(0);
+    	try {
             ImageIcon icon = new ImageIcon(getClass().getResource("/tile/backkk.jpg"));
             background = icon.getImage();
         } catch (NullPointerException e) {
@@ -172,8 +176,19 @@ public class Game extends Canvas implements Runnable {
         g2d.dispose();
         buf.show();
     }
-
-
+    
+    public void playMusic(int i) {
+    	sound.setFile(i);
+    	sound.play();
+    	sound.loop();
+    }
+    public void stopMusic() {
+    	sound.stop();
+    }
+    public void playSE(int i) {
+    	sound.setFile(i);
+    	sound.play();
+    }
     public static int getWindowHeight() {
         return WINDOW_HEIGHT;
     }
