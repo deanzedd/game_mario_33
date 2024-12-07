@@ -48,21 +48,19 @@ public class LevelHandler {
 				
 				if (red == 255 && green==255 && blue==255) continue;
 				
+				
+				//Block
 				if (red== green && red== blue) {
 					handler.addObj(new Block(i*16 ,j*16 ,16 ,16 ,0 ,3 ));
-				} else if (blue==0 && green==0 && red==5) {
-					handler.addObj(new Pipe(i*16 ,j*16 ,32 ,16 ,0 ,3 ,false ));
-				} else if (blue==0 && green==0 && red==10) {
-					handler.addObj(new Pipe(i*16 ,j*16 ,32 ,16 ,1 ,3 ,false ));
-				} else if (blue==0 && green==0 && red==15) {
-					handler.addObj(new Pipe(i*16 ,j*16 ,32 ,16 ,2 ,3 ,false ));
-				} else if (blue==0 && green==0 && red==20) {
-					handler.addObj(new Pipe(i*16 ,j*16 ,32 ,16 ,3 ,3 ,false ));
-				} else if (blue==0 && green==0 && red==25) {
-					handler.addObj(new Pipe(i*16 ,j*16 ,32 ,16 ,0 ,3 ,true ));
-				} else if (blue==0 && green==0 && red==30) {
-					handler.addObj(new Pipe(i*16 ,j*16 ,32 ,16 ,2 ,3 ,true ));
 				} 
+				
+				//Cột
+				else if (blue==48 && green==111 && red==25) {
+					handler.addObj(new Pipe(i*16 ,j*16 ,32 ,16 ,0 ,3 ,false )); //sprite index 0:đỉnh cột
+				} else if (blue==76 && green==177 && red==34) {
+					handler.addObj(new Pipe(i*16 ,j*16 ,32 ,16 ,1 ,3 ,false )); //sprite index 1:thân cột
+				}  
+				
 				
 			}
 		}

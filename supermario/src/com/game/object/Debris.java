@@ -19,15 +19,15 @@ public class Debris {
 	{
 		this.x = new float[4];
 		this.y = new float[4];
-		this.x[0] = (float)(x - (0.5 * width));
+		this.x[0] = (float) (x - (0.5 * width));
 		this.x[1] = (float) (x - (0.5 * width));
 		this.x[2] = (float) (x + (0.5 * width));
 		this.x[3] = (float) (x + (0.5 * width));
 		
-		this.y[0] = (float) (y + (0.5 * width));
-		this.y[1] = (float) (y - (0.5 * width));
-		this.y[2] = (float) (y + (0.5 * width));
-		this.y[3] = (float) (y - (0.5 * width));
+		this.y[0] = (float) (y + (0.5 * height));
+		this.y[1] = (float) (y - (0.5 * height));
+		this.y[2] = (float) (y + (0.5 * height));
+		this.y[3] = (float) (y - (0.5 * height));
 		
 		this.width = width/2;
 		this.height = height/2;
@@ -44,13 +44,13 @@ public class Debris {
 	public void tick() {		// Dieu chinh toc do cho cac manh vun debris
 		x[0] = -velX + x[0];
 		x[1] = -velX + x[1];
-		x[2] = -velX + x[2];
-		x[3] = -velX + x[3];
+		x[2] = velX + x[2];
+		x[3] = velX + x[3];
 		
-		y[0] = velY + y[0];
-		y[1] = (float)  (velY + y[1] - 2);
-		y[2] = velY + y[0];
-		y[3] = (float)  (velY + y[1] - 2);
+		y[0] = -velY + y[0];
+		y[1] = (float)  (-velY + y[1] - 2);
+		y[2] = -velY + y[2];
+		y[3] = (float)  (-velY + y[3] - 2);
 	}
 	
 	public boolean shouldRemove() {		// Lam cho cac debris bien mat khi cham dat

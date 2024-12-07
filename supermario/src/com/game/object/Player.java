@@ -128,7 +128,7 @@ public class Player extends GameObject {
 			
 			if (temp.getId() == ObjectId.Pipe) {
 				if (getBoundsLeft().intersects(temp.getBounds())) {
-					setX(temp.getX() + 2 * getWidth());
+					setX(temp.getX() + 2 * getWidth());    // do ống nước to vl
 				}
 			}
 		}
