@@ -58,6 +58,24 @@ public class Block extends GameObject {
 		debris = new Debris(getX(), getY(), getWidth(), getHeight(), getScale());
 		
 	}
+
+	@Override
+	public Rectangle getBoundsTop() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Rectangle getBoundsLeft() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Rectangle getBoundsRight() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 	

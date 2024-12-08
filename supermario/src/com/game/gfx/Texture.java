@@ -16,9 +16,11 @@ public class Texture {
     private BufferedImage player_sheet, enemy_sheet, npc_sheet, block_sheet,
                           tile_sheet, game_over_sheet, intro_sheet;
 
-    public BufferedImage[] mario_l, mario_s, tile_1, tile_2, tile_3, tile_4, pipe_1, pipe_2, debris_1;
+    public BufferedImage[] mario_l, mario_s, tile_1, tile_2, tile_3, tile_4, pipe_1, pipe_2, debris_1, Goombas_s,Goombas_l;
 
     public Texture() {
+    	Goombas_s = new BufferedImage[MARIO_S_COUNT];
+    	Goombas_l = new BufferedImage[MARIO_L_COUNT];
         mario_l = new BufferedImage[MARIO_L_COUNT];
         mario_s = new BufferedImage[MARIO_S_COUNT];
         tile_1 = new BufferedImage[TILE_1_COUNT+TILE_2_COUNT];
@@ -44,7 +46,8 @@ public class Texture {
     getPlayerTextures();
     getTileTextures();
     getPipeTexture();
-    getDebrisTextures();	
+    getDebrisTextures();
+    getGoombasTextures();
     }
     
     
@@ -128,6 +131,31 @@ public class Texture {
     	debris_1[3] = block_sheet.getSubimage(x_off + width, y_off + height, width, height);
     }
     
+    private void getGoombasTextures() {
+    	int x_off=80;  
+    	int y_off=288;   // toa do pixel bat dau. luu y chon dung toa do pixel
+    	int width=16;  // chieu dai chieu rong pixel tung khung hinh
+    	int height =32;
+    	
+    	for (int i=0; i<MARIO_L_COUNT;i++) {
+    		Goombas_l[i]=player_sheet.getSubimage(x_off+i*(width+1), y_off, width, height);
+    	}
+    	
+    	y_off+=height+1; // chọn điểm pixel cho mario nho
+    	height =16;
+    	for (int i=0; i<MARIO_S_COUNT;i++) {
+    		Goombas_s[i]=player_sheet.getSubimage(x_off+i*(width+1), y_off, width, height);
+    	}
+    	
+    }
+    
+    public BufferedImage[] getGoombasS() {
+    	return Goombas_s;
+    }
+    
+    public BufferedImage[] getGoombasL() {
+    	return Goombas_l;
+    }
     
     public BufferedImage[] getMarioL() {
     	return mario_l;

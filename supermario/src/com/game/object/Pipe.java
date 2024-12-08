@@ -38,6 +38,30 @@ public class Pipe extends GameObject {
 	public Rectangle getBounds() {
 		return new Rectangle( (int) getX(), (int) getY(), (int) getWidth(), (int) getHeight());
 	}
+
+	@Override
+	public Rectangle getBoundsTop() {
+		return new Rectangle( (int) (getX() + getWidth()/2 - getWidth()/4),
+				(int) getY(),
+				(int) getWidth()/2,
+				(int) getHeight()/2);
+	}
+
+	@Override
+	public Rectangle getBoundsLeft() {
+		return new Rectangle((int) getX(),
+				(int) (getY() + 5),
+				5,
+				(int) (getHeight() - 10));
+	}
+
+	@Override
+	public Rectangle getBoundsRight() {
+		return new Rectangle( (int) (getX() + getWidth() -5),
+				(int) getY() + 5,
+				5,
+				(int) getHeight() - 10);
+	}
 	
 	
 	

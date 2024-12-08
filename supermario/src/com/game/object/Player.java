@@ -99,7 +99,17 @@ public class Player extends GameObject {
 				setVelY(0);
 				((Block) temp).hit();
 				removeBlocks.add((Block) temp);
-			} else {	
+			} else if (temp.getId() == ObjectId.Goombas && getBounds().intersects(temp.getBoundsTop())) {
+				handler.removeObj(temp);
+				return ;
+			} else if (temp.getId() == ObjectId.Goombas && getBoundsLeft().intersects(temp.getBoundsRight())) {
+				handler.removeObj(this);  
+				return ;
+			} else if (temp.getId() == ObjectId.Goombas && getBoundsRight().intersects(temp.getBoundsLeft())) {
+				handler.removeObj(this);
+				return ;
+			}
+			else {	
 				// xét xem có bị chạm dưới hay không
 				if(getBounds().intersects(temp.getBounds())) {
 					setY(temp.getY() - getHeight());
