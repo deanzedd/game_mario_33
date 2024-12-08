@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.text.DecimalFormat;
 
 import com.game.main.Game;
 
@@ -14,6 +15,8 @@ public class UI {
 	private Image titleImage;
 	public int commandNum =0;
 	public int titleScreenState = 0; //0= the first screen, 1= the second screen
+	public double playTime;
+	DecimalFormat dFormat = new DecimalFormat("#0.00");
 	
 	public UI (Game gp) {
 		this.gp = gp;
@@ -41,8 +44,16 @@ public class UI {
 		//PAUSE STATE
 		if (gp.gameState == gp.pauseState) {
 			drawPauseScreen();
+			g2.setFont(arial_40);
+			g2.drawString("Time: "+dFormat.format(playTime), gp.SCREEN_OFFSET*15, gp.SCREEN_OFFSET);
 		}
-
+		
+		//PLAY STATE
+		if (gp.gameState == gp.playState) {
+			g2.setFont(arial_40);
+			playTime += (double)1/190;
+			g2.drawString("Time: "+dFormat.format(playTime), gp.SCREEN_OFFSET*15, gp.SCREEN_OFFSET);;
+		}
 	}
 	
 	
