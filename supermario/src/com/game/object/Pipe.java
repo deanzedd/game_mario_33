@@ -19,7 +19,7 @@ public class Pipe extends GameObject {
 		super(x, y, ObjectId.Pipe, width, height, scale);
 		this.enterable = enterable;
 		this.index= index;
-		sprite= tex.getPipe1();
+		sprite= tex.getPipe2();
 	}
 
 	@Override

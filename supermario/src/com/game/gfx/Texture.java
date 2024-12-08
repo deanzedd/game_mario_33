@@ -26,6 +26,7 @@ public class Texture {
         tile_3 = new BufferedImage[TILE_1_COUNT+TILE_2_COUNT];
         tile_4 = new BufferedImage[TILE_1_COUNT+TILE_2_COUNT];
         pipe_1 = new BufferedImage[4];
+        pipe_2 = new BufferedImage[4];
         debris_1 = new BufferedImage[4];
         Goombas_1 = new BufferedImage[2];                      
         loader = new BufferedImageLoader();
@@ -68,31 +69,31 @@ public class Texture {
     }
     private void getTileTextures() {
     	int x_off=0;  
-    	int y_off=32;   
+    	int y_off=0;   
     	int width=16;  
-    	int height =16;
+    	int height=16;
     	
     	for (int j=0;j<4;j++) {
     		for (int i=0;i< TILE_1_COUNT; i++ )
     			if (j==0) {
-    				tile_1[i] = tile_sheet.getSubimage(x_off + i*width, y_off + j*height*2, width, height);
+    				tile_1[i] = tile_sheet.getSubimage(x_off + i*width, y_off + j*height, width, height);
     			} else if (j==1) {
-    				tile_2[i] = tile_sheet.getSubimage(x_off + i*width, y_off + j*height*2, width, height);
+    				tile_2[i] = tile_sheet.getSubimage(x_off + i*width, y_off + j*height, width, height);
     			} else if (j==2) {
-    				tile_3[i] = tile_sheet.getSubimage(x_off + i*width, y_off + j*height*2, width, height);
+    				tile_3[i] = tile_sheet.getSubimage(x_off + i*width, y_off + j*height, width, height);
     			} else if (j==3) {
-    				tile_4[i] = tile_sheet.getSubimage(x_off + i*width, y_off + j*height*2, width, height);
+    				tile_4[i] = tile_sheet.getSubimage(x_off + i*width, y_off + j*height, width, height);
     			}
     	  	y_off += height;
     		for (int i=0;i< TILE_2_COUNT; i++ )
     			if (j==0) {
-    				tile_1[i + TILE_1_COUNT] = tile_sheet.getSubimage(x_off + i*width, y_off + j*height*2, width, height);
+    				tile_1[i + TILE_1_COUNT] = tile_sheet.getSubimage(x_off + i*width, y_off + j*height, width, height);
     			} else if (j==1) {
-    				tile_2[i+ TILE_1_COUNT] = tile_sheet.getSubimage(x_off + i*width, y_off + j*height*2, width, height);
+    				tile_2[i+ TILE_1_COUNT] = tile_sheet.getSubimage(x_off + i*width, y_off + j*height, width, height);
     			} else if (j==2) {
-    				tile_3[i+ TILE_1_COUNT] = tile_sheet.getSubimage(x_off + i*width, y_off + j*height*2, width, height);
+    				tile_3[i+ TILE_1_COUNT] = tile_sheet.getSubimage(x_off + i*width, y_off + j*height, width, height);
     			} else if (j==3) {
-    				tile_4[i+ TILE_1_COUNT] = tile_sheet.getSubimage(x_off + i*width, y_off + j*height*2, width, height);
+    				tile_4[i+ TILE_1_COUNT] = tile_sheet.getSubimage(x_off + i*width, y_off + j*height, width, height);
     			}
     		}
   
@@ -102,17 +103,21 @@ public class Texture {
     
     private void getPipeTexture() {  //lấy họa tiết ống
         int x_off = 0;
-        int y_off = 16 * 12;
+        int y_off = 16 * 8;
         int width = 32;
         int height = 16;
-        
         
         //pipe_1 loại pipe màu xanh
         pipe_1[0] = tile_sheet.getSubimage(x_off, y_off, width, height);
         pipe_1[1] = tile_sheet.getSubimage(x_off, y_off + height, width, height);
         pipe_1[2] = tile_sheet.getSubimage(x_off + width, y_off, width, height);
         pipe_1[3] = tile_sheet.getSubimage(x_off + width, y_off + height, width, height);
-        
+       
+        y_off+= 16*4;
+        pipe_2[0] = tile_sheet.getSubimage(x_off, y_off, width, height);
+        pipe_2[1] = tile_sheet.getSubimage(x_off, y_off + height, width, height);
+        pipe_2[2] = tile_sheet.getSubimage(x_off + width, y_off, width, height);
+        pipe_2[3] = tile_sheet.getSubimage(x_off + width, y_off + height, width, height);
         
     }
     
