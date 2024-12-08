@@ -23,7 +23,7 @@ public class Block extends GameObject {
 	public Block(int x, int y, int width, int height, int index, int scale) {
 		super(x, y, ObjectId.Block, width, height, scale);
 		this.index= index;
-		sprite = tex.getTile1();
+		sprite = tex.getTile2();
 	}
 
 	@Override
