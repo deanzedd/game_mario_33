@@ -16,7 +16,7 @@ public class Texture {
     private BufferedImage player_sheet, enemy_sheet, npc_sheet, block_sheet,
                           tile_sheet, game_over_sheet, intro_sheet;
 
-    public BufferedImage[] mario_l, mario_s, tile_1, tile_2, tile_3, tile_4, pipe_1, pipe_2, debris_1;
+    public BufferedImage[] mario_l, mario_s, tile_1, tile_2, tile_3, tile_4, pipe_1, pipe_2, debris_1, Goombas_1 ;
 
     public Texture() {
         mario_l = new BufferedImage[MARIO_L_COUNT];
@@ -27,6 +27,7 @@ public class Texture {
         tile_4 = new BufferedImage[TILE_1_COUNT+TILE_2_COUNT];
         pipe_1 = new BufferedImage[4];
         debris_1 = new BufferedImage[4];
+        Goombas_1 = new BufferedImage[2];                      
         loader = new BufferedImageLoader();
     
     try{
@@ -156,6 +157,23 @@ public class Texture {
     public BufferedImage[] getDebris1() {
     	return debris_1;
     }
+    public BufferedImage[] getGoombasL() {
+    	return Goombas_1;
+    }
+    
+    //
+    private void getGoombasTextures() {	// Ham tao hoa tiet goombas
+    	int x_off = 48;
+    	int y_off = 144;
+    	int width = 47;
+    	int height = 47;
+    	
+    
+    	Goombas_1[0] = enemy_sheet.getSubimage(x_off, y_off, width, height);
+    	Goombas_1[1] = enemy_sheet.getSubimage(x_off + 144, y_off, width, height);
+    	
+    }
+    
     
     
 }
