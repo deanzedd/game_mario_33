@@ -25,6 +25,9 @@ public abstract class GameObject {
 	public abstract void tick(); //update func
 	public abstract void render(Graphics g); //graphic update
 	public abstract Rectangle getBounds(); //define the bounding box
+	public abstract Rectangle getBoundsTop();
+	public abstract Rectangle getBoundsLeft();
+	public abstract Rectangle getBoundsRight();
 	
 	public void applyGravity() {
 		velY += 0.5f;
