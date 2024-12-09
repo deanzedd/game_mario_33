@@ -5,6 +5,7 @@ public enum ObjectId {
 	Enemy,
 	Block,
 	Pipe,
-	Goombas;
+	Goombas,
+	StaticBlock;
 
 }
