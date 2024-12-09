@@ -23,9 +23,14 @@ public class Pipe extends GameObject {
 	}
 
 	@Override
+	// Đây là những mock code để trick github rằng code có sự khác biệt
+	// Giả sử, những thay đổi được thực hiện ở file src/com.game.object/Pipe.java
 	public void tick() {
 		// TODO Auto-generated method stub
-		
+		int a = 1;
+		int b = 2;
+		int c = 3;
+		int d = 4;
 	}
 
 	@Override
