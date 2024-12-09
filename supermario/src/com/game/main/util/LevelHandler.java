@@ -7,7 +7,6 @@ import com.game.object.Block;
 import com.game.object.Goombas;
 import com.game.object.Pipe;
 import com.game.object.Player;
-import com.game.object.StaticBlock;
 import com.game.object.util.Handler;
 
 
@@ -86,9 +85,11 @@ public class LevelHandler {
 					handler.addObj(new Goombas(i*16, j*16,3,handler) );//?????????????????????????
 				}
 	          //Block cố định
+	            /*
 				else if (red == 80 && green == 81 && blue == 82) { 
 		            handler.addObj(new StaticBlock(i * 16, j * 16, 16, 16, 0, 3));
 				}
+				*/
 				
 				
 				

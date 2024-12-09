@@ -1,3 +1,5 @@
+/*
+
 package com.game.object;
 
 import java.awt.Graphics;
@@ -67,3 +69,4 @@ public class StaticBlock extends GameObject {
 		return null;
 	}
 }
+*/
