@@ -88,61 +88,94 @@ public class Player extends GameObject {
 	}
 	
 	private void collision() {
-		for(int i = 0; i< handler.getGameObjs().size(); i++) {
-			GameObject temp = handler.getGameObjs().get(i);
-			if (temp == this) continue; // neu object dang thuc hien va cham thi khong lam gi ca
-			if (removeBlocks.contains(temp)) continue;
-			
-			
-			if (temp.getId() == ObjectId.Block && getBoundsTop().intersects(temp.getBounds())) {
-				setY(temp.getY() + temp.getHeight());
-				setVelY(0);
-				((Block) temp).hit();
-				removeBlocks.add((Block) temp);
-			} else if (temp.getId() == ObjectId.Goombas && getBounds().intersects(temp.getBoundsTop())) {
-				handler.removeObj(temp);
-				return ;
-			} else if (temp.getId() == ObjectId.Goombas && getBoundsLeft().intersects(temp.getBoundsRight())) {
-				handler.removeObj(this);  
-				return ;
-			} else if (temp.getId() == ObjectId.Goombas && getBoundsRight().intersects(temp.getBoundsLeft())) {
-				handler.removeObj(this);
-				return ;
-			}
-			else {	
-				// xét xem có bị chạm dưới hay không
-				if(getBounds().intersects(temp.getBounds())) {
-					setY(temp.getY() - getHeight());
-					setVelY(0);
-					jumped = false;
-				}
-				
-				// xxét xem có bị chạm trên hay không
-				if (getBoundsTop().intersects(temp.getBounds())) {
-					setY(temp.getY() + temp.getHeight());
-					setVelY(0);
-				}
-				
-				//xét xem có bị chạm phải hay không
-				if (getBoundsRight().intersects(temp.getBounds())) {
-					setX(temp.getX() - getWidth());
-				}
-				
-				
-				//xét xem có bị chạm trái hay không
-				if (getBoundsLeft().intersects(temp.getBounds())) {
-					setX(temp.getX() + getWidth());
-				}
-				
-			}
-			
-			if (temp.getId() == ObjectId.Pipe) {
-				if (getBoundsLeft().intersects(temp.getBounds())) {
-					setX(temp.getX() + 2 * getWidth());    // do ống nước to vl
-				}
-			}
-		}
+	    for (int i = 0; i < handler.getGameObjs().size(); i++) {
+	        GameObject temp = handler.getGameObjs().get(i);
+
+	        // Bỏ qua chính đối tượng này
+	        if (temp == this) continue;
+
+	        // Xử lý Block
+	        if (temp.getId() == ObjectId.Block) {
+	            Block block = (Block) temp;
+
+	            // Bỏ qua Block có thể đi xuyên qua
+	            if (block.enterable) continue;
+
+	            // Kiểm tra va chạm từ trên
+	            if (getBoundsTop().intersects(block.getBounds())) {
+	                setY(block.getY() + block.getHeight());
+	                setVelY(0);
+	                if (block.getIndex() == 24) {
+	                    removeBlocks.add(block);
+	                    block.hit();
+	                }
+	            }
+
+	            // Kiểm tra va chạm từ dưới
+	            if (getBounds().intersects(block.getBounds())) {
+	                setY(block.getY() - getHeight());
+	                setVelY(0);
+	                jumped = false;
+	            }
+
+	            // Kiểm tra va chạm từ phải
+	            if (getBoundsRight().intersects(block.getBounds())) {
+	                setX(block.getX() - getWidth());
+	            }
+
+	            // Kiểm tra va chạm từ trái
+	            if (getBoundsLeft().intersects(block.getBounds())) {
+	                setX(block.getX() + block.getWidth());
+	            }
+	        }
+
+	        // Xử lý Pipe
+	        if (temp.getId() == ObjectId.Pipe) {
+	            Pipe pipe = (Pipe) temp;
+
+	            // Bỏ qua Pipe có thể đi xuyên qua
+	            if (pipe.enterable) continue;
+
+	            // Kiểm tra va chạm từ trên
+	            if (getBoundsTop().intersects(pipe.getBounds())) {
+	                setY(pipe.getY() + pipe.getHeight());
+	                setVelY(0);
+	            }
+
+	            // Kiểm tra va chạm từ dưới
+	            if (getBounds().intersects(pipe.getBounds())) {
+	                setY(pipe.getY() - getHeight());
+	                setVelY(0);
+	                jumped = false;
+	            }
+
+	            // Kiểm tra va chạm từ phải
+	            if (getBoundsRight().intersects(pipe.getBounds())) {
+	                setX(pipe.getX() - getWidth());
+	            }
+
+	            // Kiểm tra va chạm từ trái
+	            if (getBoundsLeft().intersects(pipe.getBounds())) {
+	                setX(pipe.getX() + pipe.getWidth());
+	            }
+	        }
+
+	        // Xử lý Goombas
+	        if (temp.getId() == ObjectId.Goombas) {
+	            if (getBounds().intersects(temp.getBoundsTop())) {
+	                handler.removeObj(temp); // Xóa Goombas nếu chạm từ trên
+	                return;
+	            }
+	            if (getBoundsLeft().intersects(temp.getBoundsRight()) || 
+	                getBoundsRight().intersects(temp.getBoundsLeft())) {
+	                handler.removeObj(this); // Xóa Player nếu chạm từ bên
+	                return;
+	            }
+	        }
+	    }
 	}
+
+
 	
 	
 	

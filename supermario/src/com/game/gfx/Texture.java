@@ -127,8 +127,8 @@ public class Texture {
     }
     
     private void getDebrisTextures() {	// Ham tao hoa tiet manh vo
-    	int x_off = 304;
-    	int y_off = 47;
+    	int x_off = 384;
+    	int y_off = 0;
     	int width = 8;
     	int height = 8;
     	
