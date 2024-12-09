@@ -15,14 +15,15 @@ public class Block extends GameObject {
 	private int index;
 	private BufferedImage[] sprite;
 	
-	private boolean hit;
+	private boolean hit = false;
 	private Debris debris;
+	public boolean enterable;
 	
 	
-	
-	public Block(int x, int y, int width, int height, int index, int scale) {
+	public Block(int x, int y, int width, int height, int index, int scale, boolean enterable) {
 		super(x, y, ObjectId.Block, width, height, scale);
 		this.index= index;
+		this.enterable =enterable;
 		sprite = tex.getTile2();
 	}
 
@@ -53,11 +54,13 @@ public class Block extends GameObject {
 		return new Rectangle((int) getX(), (int) getY(), (int) getWidth(), (int) getHeight());
 	}
 	
-	public void hit() {	// Khi main char cham vao cac block, tao ra cac manh vun debris
-		hit = true;
-		debris = new Debris(getX(), getY(), getWidth(), getHeight(), getScale());
-		
+	public void hit() { // Khi main char cham vao cac block, tao ra cac manh vun debris
+	    if (!hit) { // Kiểm tra nếu block chưa bị vỡ
+	        hit = true;
+	        debris = new Debris(getX(), getY(), getWidth(), getHeight(), getScale());
+	    }
 	}
+
 
 	@Override
 	public Rectangle getBoundsTop() {
@@ -77,6 +80,9 @@ public class Block extends GameObject {
 		return null;
 	}
 	
+	public int getIndex() {
+	    return index;
+	}
 	
 	
 }

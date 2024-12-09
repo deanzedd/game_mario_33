@@ -13,7 +13,7 @@ public class Pipe extends GameObject {
 	private int index;
 	private BufferedImage sprite[];
 	
-	private boolean enterable;
+	public boolean enterable;
 	
 	public Pipe(int x, int y, int width, int height, int index,int scale, boolean enterable) { 
 		super(x, y, ObjectId.Pipe, width, height, scale);
