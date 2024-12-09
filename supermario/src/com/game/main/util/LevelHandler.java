@@ -25,7 +25,7 @@ public class LevelHandler {
 		
 	}
 	public void start() {
-		setLevel(PARENT_FOLDER + "/map1_3.png");
+		setLevel(PARENT_FOLDER + "/map1_5.png");
 		loadCharacters (PARENT_FOLDER + "/map2.png");
 	}
 	public void setLevel(String levelTilesPath) {
@@ -54,34 +54,42 @@ public class LevelHandler {
 				//Block // ae lưu ý index sẽ là thứ tự của tile trong ảnh. ở đây ta có 4 thể loại tile là tile_1
 	            // tile_2,3,4. ví dụ tile 4 index 4 sẽ là ô thứ 4 trong ảnh và nó màu xám =)))
 	            if (red==0 && green==0 && blue==0) {
-	                handler.addObj(new Block(i*16 ,j*16 ,16 ,16 ,0 ,3 )); // số thứ 2 từ phải sang là index
+	                handler.addObj(new Block(i*16 ,j*16 ,16 ,16 ,0 ,3, false )); // số thứ 2 từ phải sang là index
 	            } 
 	            
 	            if (red==255 && green==0 && blue==0) {
-	                handler.addObj(new Block(i*16 ,j*16 ,16 ,16 ,28 ,3 )); 
+	                handler.addObj(new Block(i*16 ,j*16 ,16 ,16 ,28 ,3, false )); 
 	            } 
 	            if (red==0 && green==0 && blue==255) {
-	                handler.addObj(new Block(i*16 ,j*16 ,16 ,16 ,2 ,3 )); 
+	                handler.addObj(new Block(i*16 ,j*16 ,16 ,16 ,2 ,3, false )); 
 	            }
 	            if (red==150 && green==150 && blue==0) {
-	                handler.addObj(new Block(i*16 ,j*16 ,16 ,16 ,24 ,3 )); 
+	                handler.addObj(new Block(i*16 ,j*16 ,16 ,16 ,24 ,3, false )); 
 	            }
+	            
+	            //lâu đài
 	            if (red==255 && green==10 && blue==0) {
-	                handler.addObj(new Block(i*16 ,j*16 ,16 ,16 ,11 ,3 )); 
+	                handler.addObj(new Block(i*16 ,j*16 ,16 ,16 ,11 ,3, false )); 
+	            }
+	            if (red==255 && green==0 && blue==10) {
+	                handler.addObj(new Block(i*16 ,j*16 ,16 ,16 ,17 ,3, true )); 
 	            }
 	            if (red==255 && green==100 && blue==0) {
-	                handler.addObj(new Block(i*16 ,j*16 ,16 ,16 ,40 ,3 )); 
+	                handler.addObj(new Block(i*16 ,j*16 ,16 ,16 ,40 ,3, true )); 
 	            }
 	            if (red==255 && green==100 && blue==100) {
-	                handler.addObj(new Block(i*16 ,j*16 ,16 ,16 ,41 ,3 )); 
+	                handler.addObj(new Block(i*16 ,j*16 ,16 ,16 ,41 ,3, true )); 
 	            }
 				
 				//Cột
 	            else if (red==25&& green==111 && blue==48) {
-	                handler.addObj(new Pipe(i*16 ,j*16 ,32 ,16 ,0 ,3 ,false )); //sprite index 0:đỉnh cột
+	                handler.addObj(new Pipe(i*16 ,j*16 ,32 ,16 ,0 ,3 ,false)); //sprite index 0:đỉnh cột
 	            } else if (red==34 && green==177 &&blue==76 ) {
 	                handler.addObj(new Pipe(i*16 ,j*16 ,32 ,16 ,1 ,3 ,false )); //sprite index 1:thân cột
-	            } else if (blue==39 && green==127 && red==255) {
+	            } 
+	            
+	            //MONSTER
+	            else if (blue==39 && green==127 && red==255) {
 					handler.addObj(new Goombas(i*16, j*16,3,handler) );//?????????????????????????
 				}
 	          //Block cố định
