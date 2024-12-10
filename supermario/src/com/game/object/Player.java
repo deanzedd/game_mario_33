@@ -9,6 +9,7 @@ import java.util.LinkedList;
 
 import com.game.gfx.Animation;
 import com.game.gfx.Texture;
+import com.game.gfx.UI;
 import com.game.main.Game;
 import com.game.object.util.Handler;
 import com.game.object.util.ObjectId;
@@ -30,13 +31,16 @@ public class Player extends GameObject {
 	private boolean jumped = false;
 	private int health =2; 
 	private boolean forward = false;
+	public UI ui;
+
 	
-	public Player(float x, float y, int scale, Handler handler) {
+	public Player(float x, float y, int scale, Handler handler, UI ui) {
 		super(x,y, ObjectId.Player, WIDTH, HEIGHT, scale);
 		this.handler = handler;
+		this.ui=ui;
 		tex = Game.getTexture();
-		removeBlocks = new LinkedList<Block>();
 		
+		removeBlocks = new LinkedList<Block>();
 		
 		
 		spriteL = tex.getMarioL();
@@ -108,6 +112,7 @@ public class Player extends GameObject {
 	                if (block.getIndex() == 24) {
 	                    removeBlocks.add(block);
 	                    block.hit();
+	                    ui.updateScore(1);
 	                }
 	            }
 

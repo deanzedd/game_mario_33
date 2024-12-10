@@ -47,7 +47,7 @@ public class KeyInput extends KeyAdapter {
 						gp.ui.titleScreenState = 1;
 					}
 					else if (gp.ui.commandNum == 1) {
-						
+						gp.ui.titleScreenState = 2;
 					}
 					else if (gp.ui.commandNum == 2) {
 						System.exit(0);
@@ -89,6 +89,30 @@ public class KeyInput extends KeyAdapter {
 					}
 				}
 			}
+			else if (gp.ui.titleScreenState == 2) {
+				if (key == KeyEvent.VK_W) {
+					gp.ui.commandNum --;
+					if (gp.ui.commandNum < 0) {
+						gp.ui.commandNum =1;
+					}
+				}
+				if (key == KeyEvent.VK_S) {
+					gp.ui.commandNum ++;
+					if (gp.ui.commandNum > 1) {
+						gp.ui.commandNum =0;
+					}
+				}
+				if (key == KeyEvent.VK_ENTER) {
+					if (gp.ui.commandNum ==0 ) {
+						
+					}
+					else if (gp.ui.commandNum == 1) {
+						gp.ui.titleScreenState =0;  
+					}
+				}
+				
+			}
+				
 		}
 		
 		

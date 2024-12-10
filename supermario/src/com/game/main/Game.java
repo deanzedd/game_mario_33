@@ -26,9 +26,9 @@ public class Game extends Canvas implements Runnable {
     private static final int MILLIS_PER_SEC = 1000;
     private static final int NANOS_PER_SEC = 1000000000;
     private static final double NUM_TICKS = 60.0;
-    private static final String NAME = "Super Mario Bros";
+    private static final String NAME = "MAMILO";
 
-    private static final int WINDOW_WIDTH = 960;
+    private static final int WINDOW_WIDTH = 1280;
     private static final int WINDOW_HEIGHT = 720;
     private static final int SCREEN_WIDTH = WINDOW_WIDTH - 67;
     private static final int SCREEN_HEIGHT = WINDOW_HEIGHT;
@@ -61,7 +61,6 @@ public class Game extends Canvas implements Runnable {
         Game game = new Game();
         game.initialize();
     }
-
     private void initialize() {
         playMusic(0);
     	try {
@@ -77,7 +76,7 @@ public class Game extends Canvas implements Runnable {
         handler = new Handler();
         this.addKeyListener(new KeyInput(handler, this));
 
-        levelHandler = new LevelHandler(handler);
+        levelHandler = new LevelHandler(handler,ui);
         levelHandler.start();
 
         cam = new Camera(0, SCREEN_OFFSET);
