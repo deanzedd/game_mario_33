@@ -47,14 +47,14 @@ public class UI {
 		if (gp.gameState == gp.pauseState) {
 			drawPauseScreen();
 			g2.setFont(arial_40);
-			g2.drawString("Time: "+dFormat.format(playTime), gp.SCREEN_OFFSET*15, gp.SCREEN_OFFSET);
+			g2.drawString("Time: "+dFormat.format(playTime), gp.getScreenWidth()-gp.SCREEN_OFFSET*4, gp.SCREEN_OFFSET);
 		}
 		
 		//PLAY STATE
 		if (gp.gameState == gp.playState) {
 			g2.setFont(arial_40);
-			playTime += (double)1/190;
-			g2.drawString("Time: "+dFormat.format(playTime), gp.SCREEN_OFFSET*15, gp.SCREEN_OFFSET);;
+			playTime += (double)1/180;
+			g2.drawString("Time: "+dFormat.format(playTime), gp.getScreenWidth()-gp.SCREEN_OFFSET*4, gp.SCREEN_OFFSET);;
 		}
 	}
 	
