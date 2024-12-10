@@ -7,20 +7,24 @@ import java.awt.Image;
 import java.text.DecimalFormat;
 
 import com.game.main.Game;
+import com.game.object.Player;
 
 public class UI {
 	Game gp;
     Font arial_40, arial_80;
     Graphics2D g2;
-    private Image titleImage, titleImage2, titleImage3;
+    private Image titleImage, titleImage2, titleImage3, healthImage;
     public int commandNum = 0;
     public int titleScreenState = 0; // 0 = the first screen, 1 = the second screen
     public double playTime;
     public int score = 0; // Thêm biến lưu trữ điểm
+    public int health = 3; 
     DecimalFormat dFormat = new DecimalFormat("#0.00");
+
 
     public UI(Game gp) {
         this.gp = gp;
+
         arial_40 = new Font("Arial", Font.PLAIN, 40);
         arial_80 = new Font("Arial", Font.PLAIN, 80);
 
@@ -28,6 +32,7 @@ public class UI {
             titleImage = new javax.swing.ImageIcon(getClass().getResource("/titlescreen/newPlayer_1.png")).getImage();
             titleImage2 = new javax.swing.ImageIcon(getClass().getResource("/titlescreen/backgroundTitle.png")).getImage();
             titleImage3 = new javax.swing.ImageIcon(getClass().getResource("/titlescreen/MAMILO_ADVENTURE_2.png")).getImage();
+            healthImage = new javax.swing.ImageIcon(getClass().getResource("/UI/HEART.png")).getImage();
         } catch (NullPointerException e) {
             System.err.println("Main character image not found!");
         }
@@ -35,6 +40,9 @@ public class UI {
 
     public void updateScore(int points) {
         score += points; // Cộng điểm
+    }
+    public void updateHealth(int damage) {
+        health -= damage; // Cộng điểm
     }
 
     public void draw(Graphics2D g2) {
@@ -53,6 +61,8 @@ public class UI {
             drawPauseScreen();
             g2.setFont(arial_40);
             g2.drawString("Time: " + dFormat.format(playTime), gp.getScreenWidth() - gp.SCREEN_OFFSET * 4, gp.SCREEN_OFFSET);
+            g2.drawString("Score: " + score, gp.SCREEN_OFFSET, gp.SCREEN_OFFSET);
+            drawHealth (g2);
         }
 
         // PLAY STATE
@@ -61,9 +71,36 @@ public class UI {
             playTime += (double) 1 / 180;
             g2.drawString("Time: " + dFormat.format(playTime), gp.getScreenWidth() - gp.SCREEN_OFFSET * 4, gp.SCREEN_OFFSET);
             g2.drawString("Score: " + score, gp.SCREEN_OFFSET, gp.SCREEN_OFFSET); // Hiển thị điểm
+            drawHealth (g2);
+        }
+        if (gp.gameState == gp.gameOverState) {
+        	drawGameOverScreen ();
         }
     }
     
+	public void drawHealth(Graphics2D g2) {
+		switch (health) {
+        case 3:
+        	g2.drawImage(healthImage, gp.SCREEN_OFFSET, gp.SCREEN_OFFSET+8, gp.SCREEN_OFFSET, gp.SCREEN_OFFSET,null);
+        	g2.drawString("X 3", gp.SCREEN_OFFSET*2, gp.SCREEN_OFFSET*2);
+            break;
+        case 2:
+        	g2.drawImage(healthImage, gp.SCREEN_OFFSET, gp.SCREEN_OFFSET+8, gp.SCREEN_OFFSET, gp.SCREEN_OFFSET,null);
+        	g2.drawString("X 2", gp.SCREEN_OFFSET*2, gp.SCREEN_OFFSET*2);
+            break;
+        case 1:
+        	g2.drawImage(healthImage, gp.SCREEN_OFFSET, gp.SCREEN_OFFSET+8, gp.SCREEN_OFFSET, gp.SCREEN_OFFSET,null);
+        	g2.drawString("X 1", gp.SCREEN_OFFSET*2, gp.SCREEN_OFFSET*2);
+            break;
+        case 0:
+        	g2.drawImage(healthImage, gp.SCREEN_OFFSET, gp.SCREEN_OFFSET+8, gp.SCREEN_OFFSET, gp.SCREEN_OFFSET,null);
+        	g2.drawString("X 0", gp.SCREEN_OFFSET*2, gp.SCREEN_OFFSET*2);
+            gp.gameState = gp.gameOverState;
+           
+            // Chuyển sang trạng thái kết thúc trò chơi
+            break;
+    }
+	}
 	
 	
 	public void drawPauseScreen() {
@@ -72,6 +109,17 @@ public class UI {
 		int x = getXforCenteredText (text);
 		int y = gp.getScreenHeight()/2;
 		
+		g2.drawString(text, x, y);
+	}
+	
+	public void drawGameOverScreen () {
+		g2.setColor(new Color(0,0,0,150));
+		g2.fillRect(0, 0, gp.getWindowWidth(), gp.getWindowHeight());
+		g2.setColor(Color.white);
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 110f));
+		String text = "YOU LOSE";
+		int x = getXforCenteredText (text);
+		int y=gp.SCREEN_OFFSET*6;;
 		g2.drawString(text, x, y);
 	}
 	
@@ -94,7 +142,7 @@ public class UI {
 			//g2.drawImage(titleImage, gp.SCREEN_OFFSET*8, gp.SCREEN_OFFSET*5, gp.SCREEN_OFFSET*4, gp.SCREEN_OFFSET*4,null);
 			
 			// GAME NAME
-			g2.drawImage(titleImage3, gp.getWidth()/4-24, 0, gp.SCREEN_OFFSET*14, gp.SCREEN_OFFSET*10,null  );
+			g2.drawImage(titleImage3, gp.getWidth()/4-96, 0, gp.SCREEN_OFFSET*18, gp.SCREEN_OFFSET*9,null  );
 			
 			
 			//MENU
