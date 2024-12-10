@@ -141,7 +141,7 @@ public class Texture {
     
     private void getGoombasTextures() {
     	int x_off=80;  
-    	int y_off=288;   // toa do pixel bat dau. luu y chon dung toa do pixel
+    	int y_off=255;   // toa do pixel bat dau. luu y chon dung toa do pixel
     	int width=16;  // chieu dai chieu rong pixel tung khung hinh
     	int height =32;
     	

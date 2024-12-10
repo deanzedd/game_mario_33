@@ -16,6 +16,8 @@ public class Sound {
 		soundURL[0] = getClass().getResource("/sound/titleMusic_1.wav");
 		soundURL[1] = getClass().getResource("/sound/gameMusic_1.wav");
 		soundURL[2] = getClass().getResource("/sound/jumpSound_1.wav");
+		soundURL[3] = getClass().getResource("/sound/gameover.wav");
+		soundURL[4] = getClass().getResource("/sound/coin.wav");
 	}
 	
 	public void setFile(int i) {
@@ -36,4 +38,9 @@ public class Sound {
 	public void stop() {
 		clip.stop();
 	}
+	public boolean isPlaying() {
+	    // Kiểm tra xem âm thanh có đang phát hay không
+	    return clip.isRunning();  // clip là đối tượng AudioClip hoặc tương tự
+	}
+
 }

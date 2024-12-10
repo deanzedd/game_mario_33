@@ -3,6 +3,8 @@ package com.game.main.util; //HELP US IMPORT OUR FILE INTO DIFFERENT GAME OBJECT
 import java.awt.image.BufferedImage;
 
 import com.game.gfx.BufferedImageLoader;
+import com.game.gfx.UI;
+import com.game.main.Game;
 import com.game.object.Block;
 import com.game.object.Goombas;
 import com.game.object.Pipe;
@@ -17,10 +19,13 @@ public class LevelHandler {
 	
 	private BufferedImage levelTiles;
 	private Handler handler;
+    public UI ui;
+	public Game gp;
     
-	
-	public LevelHandler (Handler handler) {
+	public LevelHandler (Handler handler,UI ui, Game gp) {
 		this.handler = handler;
+		this.ui = ui;
+		this.gp=gp;
 		loader = new BufferedImageLoader();
 		
 	}
@@ -124,7 +129,7 @@ public class LevelHandler {
 				
 				if (red== green && red== blue) {
 					if (red==0) {
-						handler.setPlayer(new Player(i*16, j*16,3,handler));
+						handler.setPlayer(new Player(i*16, j*16,3,handler,ui, gp));
 					}
 				}
 				

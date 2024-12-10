@@ -47,7 +47,7 @@ public class KeyInput extends KeyAdapter {
 						gp.ui.titleScreenState = 1;
 					}
 					else if (gp.ui.commandNum == 1) {
-						
+						gp.ui.titleScreenState = 2;
 					}
 					else if (gp.ui.commandNum == 2) {
 						System.exit(0);
@@ -72,26 +72,40 @@ public class KeyInput extends KeyAdapter {
 					if (gp.ui.commandNum ==0 ) {
 						gp.gameState =gp.playState;
 						gp.stopMusic();
-						gp.playMusic(1);         //se add music sau
+						gp.playMusic(1);
 					}
 					else if (gp.ui.commandNum == 1) {
 						gp.gameState =gp.playState;
 						gp.stopMusic();
-						gp.playMusic(1);         //se add music sau
+						gp.playMusic(1);
+						
 					}
 					else if (gp.ui.commandNum == 2) {
 						gp.gameState =gp.playState;
 						gp.stopMusic();
-						gp.playMusic(1);         //se add music sau
+						gp.playMusic(1);
+						
 					}
 					else if (gp.ui.commandNum == 3) {
 						gp.ui.titleScreenState=0;
+					
 					}
 				}
 			}
+			else if (gp.ui.titleScreenState == 2) {
+				if (key == KeyEvent.VK_ENTER) {
+						gp.ui.titleScreenState =0;  
+					}
+				}
+				
+			}
+		
+		if (gp.gameState == gp.gameOverState) {
+			if (key == KeyEvent.VK_ENTER) {
+				System.exit(0);
+				
+			}
 		}
-		
-		
 		
 		if(key == KeyEvent.VK_ESCAPE) { //VK == virtual key
 			System.exit(0);
