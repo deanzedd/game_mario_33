@@ -19,6 +19,8 @@ public class Player extends GameObject {
 	private static final float HEIGHT = 16;
 	private Handler handler;
 	private Texture tex;
+	private int damageCooldown = 0; // Thời gian chờ giữa các lần mất máu
+
 	
 	private PlayerState state;
 	private BufferedImage[] spriteL,spriteS;
@@ -29,15 +31,15 @@ public class Player extends GameObject {
 	private LinkedList<Block> removeBlocks;
 	
 	private boolean jumped = false;
-	private int health =2; 
 	private boolean forward = false;
 	public UI ui;
-
+	public Game gp;
 	
-	public Player(float x, float y, int scale, Handler handler, UI ui) {
+	public Player(float x, float y, int scale, Handler handler, UI ui, Game gp) {
 		super(x,y, ObjectId.Player, WIDTH, HEIGHT, scale);
 		this.handler = handler;
 		this.ui=ui;
+		this.gp = gp;
 		tex = Game.getTexture();
 		
 		removeBlocks = new LinkedList<Block>();
@@ -65,6 +67,10 @@ public class Player extends GameObject {
 		
 		collision(); // update va cham
 		
+		// Giảm giá trị cooldown
+	    if (damageCooldown > 0) {
+	        damageCooldown--;
+	    }
 		currAnimation.runAnimation();
 		
 		
@@ -110,9 +116,11 @@ public class Player extends GameObject {
 	                setY(block.getY() + block.getHeight());
 	                setVelY(0);
 	                if (block.getIndex() == 24) {
+	                	gp.playSE(4);
 	                    removeBlocks.add(block);
 	                    block.hit();
 	                    ui.updateScore(1);
+	                //  gp.gameState= gp.pauseState; // for testing    
 	                }
 	            }
 
@@ -162,21 +170,26 @@ public class Player extends GameObject {
 	            // Kiểm tra va chạm từ trái
 	            if (getBoundsLeft().intersects(pipe.getBounds())) {
 	                setX(pipe.getX() + pipe.getWidth());
+
 	            }
 	        }
 
 	        // Xử lý Goombas
 	        if (temp.getId() == ObjectId.Goombas) {
 	            if (getBounds().intersects(temp.getBoundsTop())) {
-	                handler.removeObj(temp); // Xóa Goombas nếu chạm từ trên
+	                handler.removeObj(temp);
 	                return;
 	            }
 	            if (getBoundsLeft().intersects(temp.getBoundsRight()) || 
 	                getBoundsRight().intersects(temp.getBoundsLeft())) {
-	                handler.removeObj(this); // Xóa Player nếu chạm từ bên
+	                if (damageCooldown == 0) { // Kiểm tra cooldown
+	                    ui.updateHealth(1);
+	                    damageCooldown = 60; // Thời gian chờ (60 khung hình ~ 1 giây nếu FPS = 60)
+	                }
 	                return;
 	            }
 	        }
+
 	    }
 	}
 

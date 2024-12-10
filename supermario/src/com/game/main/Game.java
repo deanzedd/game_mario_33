@@ -19,6 +19,7 @@ import com.game.object.Block;
 import com.game.object.Player;
 import com.game.object.util.Handler;
 import com.game.object.util.KeyInput;
+import com.game.object.util.ObjectId;
 
 public class Game extends Canvas implements Runnable {
 
@@ -49,7 +50,9 @@ public class Game extends Canvas implements Runnable {
     public final int titleState = 0;
     public final int playState = 1;
     public final int pauseState = 2;
-    
+    public final int dialogueState =3;
+    public final int winningState =4;
+    public final int gameOverState =5;
     //UI
     public UI ui = new UI(this);
     private Image background;
@@ -57,11 +60,16 @@ public class Game extends Canvas implements Runnable {
     //SOUND
     Sound sound = new Sound();
     
+    //PLAYER
+    Player player;
+    
     public static void main(String[] args) {
         Game game = new Game();
         game.initialize();
     }
-    private void initialize() {
+    public void initialize() {
+        gameState = titleState;
+        
         playMusic(0);
     	try {
             ImageIcon icon = new ImageIcon(getClass().getResource("/tile/BACK2.jpg"));
@@ -72,17 +80,19 @@ public class Game extends Canvas implements Runnable {
         }
 
         tex = new Texture();
-
         handler = new Handler();
+        
+        
+        
         this.addKeyListener(new KeyInput(handler, this));
 
-        levelHandler = new LevelHandler(handler,ui);
+        levelHandler = new LevelHandler(handler,ui,this);
         levelHandler.start();
 
         cam = new Camera(0, SCREEN_OFFSET);
         new Windows(WINDOW_WIDTH, WINDOW_HEIGHT, NAME, this);
 
-        gameState = titleState;
+ 
 
         start();
     }
@@ -127,7 +137,9 @@ public class Game extends Canvas implements Runnable {
 
             render();
             frames++;
-
+            
+            
+            
             if (System.currentTimeMillis() - timer > MILLIS_PER_SEC) {
                 timer += MILLIS_PER_SEC;
                 System.out.println("FPS: " + frames + " TPS: " + updates);
@@ -141,9 +153,14 @@ public class Game extends Canvas implements Runnable {
 
     private void tick() {
         if (gameState == playState) {
-            handler.tick();
+            handler.tick();  //UPDATE
             cam.tick(handler.getPlayer());
         }
+        if (gameState == gameOverState) {
+        	stopMusic();
+    		playSE(3);
+        }
+    	
     }
 
     private void render() {
