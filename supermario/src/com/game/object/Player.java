@@ -177,11 +177,22 @@ public class Player extends GameObject {
 	        // Xử lý Goombas
 	        if (temp.getId() == ObjectId.Goombas) {
 	            if (getBounds().intersects(temp.getBoundsTop())) {
+	            	setVelY(-15);
 	                handler.removeObj(temp);
 	                return;
 	            }
-	            if (getBoundsLeft().intersects(temp.getBoundsRight()) || 
-	                getBoundsRight().intersects(temp.getBoundsLeft())) {
+	            if (getBoundsLeft().intersects(temp.getBoundsRight()))  {
+	            	setVelY(-15);
+	            	setVelX(5);
+	                if (damageCooldown == 0) { // Kiểm tra cooldown
+	                    ui.updateHealth(1);
+	                    damageCooldown = 60; // Thời gian chờ (60 khung hình ~ 1 giây nếu FPS = 60)
+	                }
+	                return;
+	            }
+	            if (getBoundsRight().intersects(temp.getBoundsLeft()))  {
+	            	setVelY(-15);
+	            	setVelX(-5);
 	                if (damageCooldown == 0) { // Kiểm tra cooldown
 	                    ui.updateHealth(1);
 	                    damageCooldown = 60; // Thời gian chờ (60 khung hình ~ 1 giây nếu FPS = 60)
