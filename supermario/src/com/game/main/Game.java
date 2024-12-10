@@ -76,7 +76,7 @@ public class Game extends Canvas implements Runnable {
         handler = new Handler();
         this.addKeyListener(new KeyInput(handler, this));
 
-        levelHandler = new LevelHandler(handler);
+        levelHandler = new LevelHandler(handler,ui);
         levelHandler.start();
 
         cam = new Camera(0, SCREEN_OFFSET);

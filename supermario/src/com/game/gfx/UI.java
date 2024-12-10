@@ -10,53 +10,60 @@ import com.game.main.Game;
 
 public class UI {
 	Game gp;
-	Font arial_40, arial_80;
-	Graphics2D g2;
-	private Image titleImage, titleImage2, titleImage3;
-	public int commandNum =0;
-	public int titleScreenState = 0; //0= the first screen, 1= the second screen
-	public double playTime;
-	DecimalFormat dFormat = new DecimalFormat("#0.00");
-	
-	public UI (Game gp) {
-		this.gp = gp;
-		arial_40 = new Font ("Arial", Font.PLAIN, 40);
-		arial_80 = new Font ("Arial", Font.PLAIN, 80);
-		
-		try {
+    Font arial_40, arial_80;
+    Graphics2D g2;
+    private Image titleImage, titleImage2, titleImage3;
+    public int commandNum = 0;
+    public int titleScreenState = 0; // 0 = the first screen, 1 = the second screen
+    public double playTime;
+    public int score = 0; // Thêm biến lưu trữ điểm
+    DecimalFormat dFormat = new DecimalFormat("#0.00");
+
+    public UI(Game gp) {
+        this.gp = gp;
+        arial_40 = new Font("Arial", Font.PLAIN, 40);
+        arial_80 = new Font("Arial", Font.PLAIN, 80);
+
+        try {
             titleImage = new javax.swing.ImageIcon(getClass().getResource("/titlescreen/newPlayer_1.png")).getImage();
             titleImage2 = new javax.swing.ImageIcon(getClass().getResource("/titlescreen/backgroundTitle.png")).getImage();
             titleImage3 = new javax.swing.ImageIcon(getClass().getResource("/titlescreen/MAMILO_ADVENTURE_2.png")).getImage();
         } catch (NullPointerException e) {
             System.err.println("Main character image not found!");
         }
-	}
-	
-	public void draw (Graphics2D g2) {
-		
-		this.g2 = g2;
-		
-		g2.setFont(arial_80);
-		g2.setColor(Color.white);
-		//TITLE STATE
-		if (gp.gameState == gp.titleState) {
-			drawTitleScreen();
-		}
-		
-		//PAUSE STATE
-		if (gp.gameState == gp.pauseState) {
-			drawPauseScreen();
-			g2.setFont(arial_40);
-			g2.drawString("Time: "+dFormat.format(playTime), gp.getScreenWidth()-gp.SCREEN_OFFSET*4, gp.SCREEN_OFFSET);
-		}
-		
-		//PLAY STATE
-		if (gp.gameState == gp.playState) {
-			g2.setFont(arial_40);
-			playTime += (double)1/180;
-			g2.drawString("Time: "+dFormat.format(playTime), gp.getScreenWidth()-gp.SCREEN_OFFSET*4, gp.SCREEN_OFFSET);;
-		}
-	}
+    }
+
+    public void updateScore(int points) {
+        score += points; // Cộng điểm
+    }
+
+    public void draw(Graphics2D g2) {
+        this.g2 = g2;
+
+        g2.setFont(arial_40);
+        g2.setColor(Color.white);
+
+        // TITLE STATE
+        if (gp.gameState == gp.titleState) {
+            drawTitleScreen();
+        }
+
+        // PAUSE STATE
+        if (gp.gameState == gp.pauseState) {
+            drawPauseScreen();
+            g2.setFont(arial_40);
+            g2.drawString("Time: " + dFormat.format(playTime), gp.getScreenWidth() - gp.SCREEN_OFFSET * 4, gp.SCREEN_OFFSET);
+        }
+
+        // PLAY STATE
+        if (gp.gameState == gp.playState) {
+            g2.setFont(arial_40);
+            playTime += (double) 1 / 180;
+            g2.drawString("Time: " + dFormat.format(playTime), gp.getScreenWidth() - gp.SCREEN_OFFSET * 4, gp.SCREEN_OFFSET);
+            g2.drawString("Score: " + score, gp.SCREEN_OFFSET, gp.SCREEN_OFFSET); // Hiển thị điểm
+        }
+    }
+    
 	
 	
 	public void drawPauseScreen() {
