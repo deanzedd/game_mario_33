@@ -12,7 +12,7 @@ public class UI {
 	Game gp;
 	Font arial_40, arial_80;
 	Graphics2D g2;
-	private Image titleImage;
+	private Image titleImage, titleImage2, titleImage3;
 	public int commandNum =0;
 	public int titleScreenState = 0; //0= the first screen, 1= the second screen
 	public double playTime;
@@ -25,6 +25,8 @@ public class UI {
 		
 		try {
             titleImage = new javax.swing.ImageIcon(getClass().getResource("/titlescreen/newPlayer_1.png")).getImage();
+            titleImage2 = new javax.swing.ImageIcon(getClass().getResource("/titlescreen/backgroundTitle.png")).getImage();
+            titleImage3 = new javax.swing.ImageIcon(getClass().getResource("/titlescreen/MAMILO_ADVENTURE_2.png")).getImage();
         } catch (NullPointerException e) {
             System.err.println("Main character image not found!");
         }
@@ -74,34 +76,33 @@ public class UI {
 			g2.fillRect(0, 0, gp.getWindowWidth(), gp.getWindowHeight());
 			
 			g2.setFont(g2.getFont().deriveFont(Font.BOLD, 96f));
-			String text = "Huster Adventure";
-			int x = getXforCenteredText (text) ;
-			int y = gp.SCREEN_OFFSET*3;
+			String text = "MAMILO";
+			int x;
+			int y=gp.SCREEN_OFFSET*2+24;;
 			
-			//SHADOW
-			g2.setColor(Color.gray);
-			g2.drawString(text, x+4, y+4);
-			//GAME NAME COLOR
-			g2.setColor(Color.white);
-			g2.drawString(text, x, y);
 			
 			//MAIN CHARACTER IMAGE
-			x = gp.getWindowWidth()/2- gp.SCREEN_OFFSET*3 +30;
-			y = gp.SCREEN_OFFSET*5;
-			g2.drawImage(titleImage, x, y, gp.SCREEN_OFFSET*4, gp.SCREEN_OFFSET*4,null);
+			
+			g2.drawImage(titleImage2, -48*2, 0, gp.getWidth()+48*4, gp.getHeight(),null);
+			//g2.drawImage(titleImage, gp.SCREEN_OFFSET*8, gp.SCREEN_OFFSET*5, gp.SCREEN_OFFSET*4, gp.SCREEN_OFFSET*4,null);
+			
+			// GAME NAME
+			g2.drawImage(titleImage3, gp.getWidth()/4-24, 0, gp.SCREEN_OFFSET*14, gp.SCREEN_OFFSET*10,null  );
+			
 			
 			//MENU
+			g2.setColor(Color.WHITE);
 			g2.setFont(g2.getFont().deriveFont(Font.BOLD,48f));
 			text = "New Game";
 			x = getXforCenteredText (text) ;
-			y += gp.SCREEN_OFFSET*5;
+			y += gp.SCREEN_OFFSET*7 +gp.SCREEN_OFFSET/2;
 			g2.drawString(text, x, y);
 			if (commandNum == 0) {
 				g2.drawString(">", x-gp.SCREEN_OFFSET, y);
 			}
 			
 			g2.setFont(g2.getFont().deriveFont(Font.BOLD,48f));
-			text = "Load Game";
+			text = "Play Instruction";
 			x = getXforCenteredText (text) ;
 			y += gp.SCREEN_OFFSET;
 			g2.drawString(text, x, y);
@@ -120,6 +121,9 @@ public class UI {
 		}
 		
 		else if (titleScreenState == 1) {
+			g2.setColor(Color.BLACK);
+			g2.fillRect(0, 0, gp.getWindowWidth(), gp.getWindowHeight());
+			
 			//CLASS SELECTION SCREEN
 			g2.setColor (Color.white);
 			g2.setFont(g2.getFont().deriveFont(42F));
@@ -161,7 +165,37 @@ public class UI {
 				g2.drawString(">",x-gp.SCREEN_OFFSET, y);
 			}
 		}
-		
+		else if (titleScreenState == 2) {
+			
+			g2.setColor(Color.BLACK);
+			g2.fillRect(0, 0, gp.getWindowWidth(), gp.getWindowHeight());
+			
+			g2.setColor (Color.white);
+			g2.setFont(g2.getFont().deriveFont(20F));
+			
+			int y = gp.SCREEN_OFFSET*5;
+			
+			String text ="Cốt truyện: Mamilo là 1 nhà truy tìm kho báu bị lạc vào một vùng đất bí ẩn,";
+			int x = getXforCenteredText (text);
+			g2.drawString (text, x, y);
+			
+			text ="cậu phải tìm mọi cách để đến được lâu đài, đánh bại boss cuối để lấy được phần thưởng";
+			x = getXforCenteredText (text);
+			y+=gp.SCREEN_OFFSET/2;
+			g2.drawString (text, x, y);
+			
+			if (commandNum == 0) {
+				g2.drawString(">",x-gp.SCREEN_OFFSET, y-gp.SCREEN_OFFSET/2);
+			}
+			
+			text ="Back";
+			x = getXforCenteredText (text);
+			y += gp.SCREEN_OFFSET;
+			g2.drawString (text, x, y);
+			if (commandNum == 1) {
+				g2.drawString(">",x-gp.SCREEN_OFFSET, y);
+			}
+		}
 		
 	}
 	
@@ -171,4 +205,5 @@ public class UI {
 		int x = gp.getScreenWidth()/2 - length/2;
 		return x+ gp.SCREEN_OFFSET/2;
 	}
+	
 }

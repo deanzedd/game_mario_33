@@ -35,8 +35,8 @@ public class Player extends GameObject {
 		super(x,y, ObjectId.Player, WIDTH, HEIGHT, scale);
 		this.handler = handler;
 		tex = Game.getTexture();
-		removeBlocks = new LinkedList<Block>();
 		
+		removeBlocks = new LinkedList<Block>();
 		
 		
 		spriteL = tex.getMarioL();
