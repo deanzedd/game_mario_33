@@ -13,9 +13,9 @@ import com.game.main.Game;
 import com.game.object.util.Handler;
 import com.game.object.util.ObjectId;
 
-public class Goombas extends GameObject {
-	private static final float WIDTH = 16;
-	private static final float HEIGHT = 16;
+public class BossNigga extends GameObject {
+	private static final float WIDTH = 32;
+	private static final float HEIGHT = 32;
 	private Handler handler;
 	private Texture tex;
 	
@@ -26,16 +26,15 @@ public class Goombas extends GameObject {
 	private BufferedImage[] currSprite;
 	private Animation currAnimation;
 	
-	
-	public Goombas(float x, float y, int scale, Handler handler) {
-		super(x,y, ObjectId.Goombas, WIDTH, HEIGHT, scale);
+	public BossNigga(float x, float y, int scale, Handler handler) {
+		super(x,y, ObjectId.BossNigga, WIDTH, HEIGHT, scale);
 		this.handler = handler;
 		tex = Game.getTexture();
 		
 		
 		
 		spriteL = tex.getGoombasL();
-		spriteS = tex.getGoombasS();
+		spriteS = tex.getBossNiggaS();
 		
 		//goombasWalkL = new Animation(5, spriteL[1], spriteL[2], spriteL[3]);	// Lay animation nhan vat voi 3 hinh SpriteLarge dau tien
 		//goombasWalkS = new Animation(0, spriteS[1], spriteS[2], spriteS[3]);	
@@ -71,7 +70,7 @@ public class Goombas extends GameObject {
 		for(int i = 0; i< handler.getGameObjs().size(); i++) {
 			GameObject temp = handler.getGameObjs().get(i);
 			if (temp == this) continue; // neu object dang thuc hien va cham thi khong lam gi ca
-			if(temp.getId()==ObjectId.Goombas || temp.getId()==ObjectId.Nigga) continue;
+			if(temp.getId()==ObjectId.Nigga || temp.getId()==ObjectId.Goombas) continue;
 			
 			
 			
@@ -132,7 +131,13 @@ public class Goombas extends GameObject {
 	@Override
 	public void render(Graphics g) {
 		// TODO Auto-generated method stub
-		g.drawImage(currSprite[0], (int) getX(), (int) getY(), (int) getWidth(), (int) getHeight(), null);
+		if (getVelX() > 0) {	// khi di sang phai
+	    	currAnimation.drawAnimation(g, (int) getX(), (int) getY(), (int) getWidth(), (int) getHeight());
+	    	//forward = true;
+	    } else if (getVelX() < 0) {	// khi di sang trai
+	    	currAnimation.drawAnimation(g, (int) (getX() + getWidth()), (int) getY(), (int) -getWidth(), (int) getHeight());
+	    	//forward = false;
+	    }
 		
 	}
 
@@ -206,9 +211,5 @@ public class Goombas extends GameObject {
 		g2d.draw(getBoundsTop());
 			
 	}
-	
-	
-	
-	
 
 }

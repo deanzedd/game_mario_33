@@ -6,7 +6,9 @@ import com.game.gfx.BufferedImageLoader;
 import com.game.gfx.UI;
 import com.game.main.Game;
 import com.game.object.Block;
+import com.game.object.BossNigga;
 import com.game.object.Goombas;
+import com.game.object.Nigga;
 import com.game.object.Pipe;
 import com.game.object.Player;
 import com.game.object.util.Handler;
@@ -21,6 +23,7 @@ public class LevelHandler {
 	private Handler handler;
     public UI ui;
 	public Game gp;
+	private int currentLevel = 1; // Theo dõi map hiện tại
     
 	public LevelHandler (Handler handler,UI ui, Game gp) {
 		this.handler = handler;
@@ -32,7 +35,15 @@ public class LevelHandler {
 	public void start() {
 		setLevel(PARENT_FOLDER + "/map1_5.png");
 		loadCharacters (PARENT_FOLDER + "/map2.png");
+		loadLevel(1);
+		
 	}
+	
+	public void loadLevel(int level) {
+        setLevel(PARENT_FOLDER + "/map" + level + ".png");
+        loadCharacters(PARENT_FOLDER + "/objectsMap"+ level +".png");
+    }
+	
 	public void setLevel(String levelTilesPath) {
 		this.levelTiles = loader.loadImage(levelTilesPath);
 		
@@ -97,6 +108,12 @@ public class LevelHandler {
 	            else if (blue==39 && green==127 && red==255) {
 					handler.addObj(new Goombas(i*16, j*16,3,handler) );//?????????????????????????
 				}
+	            else if (blue==40 && green==40 && red==40) {
+					handler.addObj(new Nigga(i*16, j*16,3,handler) );//?????????????????????????
+				}
+	            else if (blue==33 && green==33 && red==33) {
+					handler.addObj(new BossNigga(i*16, j*16,3,handler) );//?????????????????????????
+				}
 	          //Block cố định
 	            /*
 				else if (red == 80 && green == 81 && blue == 82) { 
@@ -129,11 +146,27 @@ public class LevelHandler {
 				
 				if (red== green && red== blue) {
 					if (red==0) {
-						handler.setPlayer(new Player(i*16, j*16,2,handler,ui, gp));
+						handler.setPlayer(new Player(i*16, j*16,2,handler, gp));
 					}
 				}
 				
 			}
 		}
 	}
+	
+	 public void nextLevel() {
+		    gp.ui.health = gp.ui.secondRoundHealth;
+	        currentLevel++;
+	        handler.clearAllObjects(); // Xóa tất cả các object hiện tại
+	        loadLevel(currentLevel); // Tải map tiếp theo
+	    }
+	 public void againLevel(int i) {
+		    if (i==1) {
+		    	gp.ui.health = gp.ui.firstRoundHealth;
+		    } else if (i==2) {
+		    	gp.ui.health = gp.ui.secondRoundHealth;
+		    }
+	        handler.clearAllObjects(); // Xóa tất cả các object hiện tại
+	        loadLevel(i); // Tải lại map hiện tại
+	    }
 }
