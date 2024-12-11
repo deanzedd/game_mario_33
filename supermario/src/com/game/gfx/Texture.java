@@ -14,12 +14,12 @@ public class Texture {
 
     private BufferedImageLoader loader;
     private BufferedImage player_sheet, enemy_sheet, npc_sheet, block_sheet,
-                          tile_sheet, game_over_sheet, intro_sheet;
+                          tile_sheet, game_over_sheet, intro_sheet,goombas_sheet;
 
     public BufferedImage[] mario_l, mario_s, tile_1, tile_2, tile_3, tile_4, pipe_1, pipe_2, debris_1, Goombas_s,Goombas_l;
 
     public Texture() {
-    	Goombas_s = new BufferedImage[MARIO_S_COUNT];
+    	Goombas_s = new BufferedImage[1];
     	Goombas_l = new BufferedImage[MARIO_L_COUNT];
         mario_l = new BufferedImage[MARIO_L_COUNT];
         mario_s = new BufferedImage[MARIO_S_COUNT];
@@ -40,6 +40,7 @@ public class Texture {
         tile_sheet = loader.loadImage (PARENT_FOLDER+ "NES - Super Mario Bros - Tileset.png"); 
         game_over_sheet = loader.loadImage (PARENT_FOLDER+ "NES - Super Mario Bros - Time Up Game Over Screen.png");
         intro_sheet = loader.loadImage (PARENT_FOLDER+ "NES - Super Mario Bros - Title Screen.png");
+        goombas_sheet = loader.loadImage (PARENT_FOLDER + "Ghost.png");
     	
     } catch (Exception e) {
     	e.printStackTrace();
@@ -140,20 +141,14 @@ public class Texture {
     }
     
     private void getGoombasTextures() {
-    	int x_off=80;  
-    	int y_off=255;   // toa do pixel bat dau. luu y chon dung toa do pixel
-    	int width=16;  // chieu dai chieu rong pixel tung khung hinh
-    	int height =32;
+    	int x_off=0;  
+    	int y_off=0;   // toa do pixel bat dau. luu y chon dung toa do pixel
+    	int width=15;  // chieu dai chieu rong pixel tung khung hinh
+    	int height =15;
     	
-    	for (int i=0; i<MARIO_L_COUNT;i++) {
-    		Goombas_l[i]=player_sheet.getSubimage(x_off+i*(width+1), y_off, width, height);
-    	}
     	
-    	y_off+=height+1; // chọn điểm pixel cho mario nho
-    	height =16;
-    	for (int i=0; i<MARIO_S_COUNT;i++) {
-    		Goombas_s[i]=player_sheet.getSubimage(x_off+i*(width+1), y_off, width, height);
-    	}
+    		Goombas_s[0]=goombas_sheet.getSubimage(x_off, y_off, width, height);
+    	
     	
     }
     

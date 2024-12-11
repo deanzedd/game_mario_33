@@ -37,14 +37,15 @@ public class Goombas extends GameObject {
 		spriteL = tex.getGoombasL();
 		spriteS = tex.getGoombasS();
 		
-		goombasWalkL = new Animation(5, spriteL[1], spriteL[2], spriteL[3]);	// Lay animation nhan vat voi 3 hinh SpriteLarge dau tien
-		goombasWalkS = new Animation(5, spriteS[1], spriteS[2], spriteS[3]);	
+		//goombasWalkL = new Animation(5, spriteL[1], spriteL[2], spriteL[3]);	// Lay animation nhan vat voi 3 hinh SpriteLarge dau tien
+		//goombasWalkS = new Animation(0, spriteS[1], spriteS[2], spriteS[3]);	
 		
 		state = PlayerState.Small;
 		currSprite = spriteS;
 		
 
 		currAnimation = goombasWalkS;
+		
 		setVelX(-2);
 		
 	}
@@ -60,7 +61,7 @@ public class Goombas extends GameObject {
 		
 		collision(); // update va cham
 		
-		currAnimation.runAnimation();
+		//currAnimation.runAnimation();
 		
 		
 	}
@@ -131,7 +132,7 @@ public class Goombas extends GameObject {
 	@Override
 	public void render(Graphics g) {
 		// TODO Auto-generated method stub
-		g.drawImage(currSprite[5], (int) getX(), (int) getY(), (int) getWidth(), (int) getHeight(), null);
+		g.drawImage(currSprite[0], (int) getX(), (int) getY(), (int) getWidth(), (int) getHeight(), null);
 		
 	}
 
