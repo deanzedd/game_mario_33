@@ -104,13 +104,15 @@ public class KeyInput extends KeyAdapter {
 		if (gp.gameState == gp.gameOverState) {
 			if (key == KeyEvent.VK_ENTER) {
 				gp.gameState= gp.playState;
-				
+
 				
 			}
 		}
 		
 		if (gp.gameState == gp.dialogueState) {
+
 	        if (key == KeyEvent.VK_ENTER) {
+
 	            // Ensure you are accessing the Player's winning state through handler
 	            Player player = handler.getPlayer();  // Get the current player
 
@@ -121,6 +123,7 @@ public class KeyInput extends KeyAdapter {
 	            }
 	        }
 	    }
+
 		
 		if(key == KeyEvent.VK_ESCAPE) { //VK == virtual key
 			System.exit(0);

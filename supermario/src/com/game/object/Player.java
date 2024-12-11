@@ -15,8 +15,8 @@ import com.game.object.util.Handler;
 import com.game.object.util.ObjectId;
 
 public class Player extends GameObject {
-	private static final float WIDTH = 16;
-	private static final float HEIGHT = 16;
+	private static final float WIDTH = 32;
+	private static final float HEIGHT = 32;
 	private Handler handler;
 	private Texture tex;
 	private int damageCooldown = 0; // Thời gian chờ giữa các lần mất máu
@@ -29,15 +29,18 @@ public class Player extends GameObject {
 	private Animation currAnimation;
 	public boolean isWinning1 = false;
 	public boolean isWininning2 = false;
+
 	private LinkedList<Block> removeBlocks;
 	
 	private boolean jumped = false;
 	private boolean forward = false;
+
 	public Game gp;
 	
 	public Player(float x, float y, int scale, Handler handler, Game gp) {
 		super(x,y, ObjectId.Player, WIDTH, HEIGHT, scale);
 		this.handler = handler;
+
 		this.gp = gp;
 		tex = Game.getTexture();
 		
@@ -48,7 +51,7 @@ public class Player extends GameObject {
 		spriteS = tex.getMarioS();
 		
 		playerWalkL = new Animation(5, spriteL[1], spriteL[2], spriteL[3]);	// Lay animation nhan vat voi 3 hinh SpriteLarge dau tien
-		playerWalkS = new Animation(5, spriteS[1], spriteS[2], spriteS[3]);	
+		playerWalkS = new Animation(5, spriteS[9], spriteS[10], spriteS[11]);	
 		
 		state = PlayerState.Small;
 		currSprite = spriteS;
@@ -79,10 +82,12 @@ public class Player extends GameObject {
 	public void render(Graphics g) {
 	    if (jumped) { 	// khi nhan vat nhay
 	    	if (forward) {	// kiem tra xem co phai nhay len khong
-	    		g.drawImage(currSprite[5], (int) getX(), (int) getY(), (int) getWidth(), (int) getHeight(), null);
+	    		//g.drawImage(currSprite[5], (int) getX(), (int) getY(), (int) getWidth(), (int) getHeight(), null);
+	    		g.drawImage(currSprite[5], (int) (getX() + getWidth()), (int) getY(), (int) -getWidth(), (int) getHeight(), null);
 	    		
 	    	} else {
-	    		g.drawImage(currSprite[5], (int) (getX() + getWidth()), (int) getY(), (int) -getWidth(), (int) getHeight(), null);
+	    		//g.drawImage(currSprite[5], (int) (getX() + getWidth()), (int) getY(), (int) -getWidth(), (int) getHeight(), null);
+	    		g.drawImage(currSprite[5], (int) getX(), (int) getY(), (int) getWidth(), (int) getHeight(), null);
 	    	} 
 	    } else if (getVelX() > 0) {	// khi di sang phai
 	    	currAnimation.drawAnimation(g, (int) getX(), (int) getY(), (int) getWidth(), (int) getHeight());
@@ -117,9 +122,9 @@ public class Player extends GameObject {
 	                if (block.getIndex() == 24) {
 	                	removeBlocks.add(block);
 	                	gp.playSE(4);
-	                	
-	                    block.hit();
-	                    gp.ui.updateScore(1);
+
+	                   block.hit();
+	                   gp.ui.updateScore(1);
 	                     //  gp.gameState= gp.pauseState; // for testing    
 	                }
 	            }
@@ -184,17 +189,34 @@ public class Player extends GameObject {
 	        }
 
 	        // Xử lý Goombas
-	        if (temp.getId() == ObjectId.Goombas) {
+	        if ((temp.getId() == ObjectId.Goombas)||(temp.getId() == ObjectId.Nigga)||(temp.getId() == ObjectId.BossNigga)) {
 	            if (getBounds().intersects(temp.getBoundsTop())) {
+	            	setVelY(-15);
 	                handler.removeObj(temp);
 	                return;
 	            }
-	            if (getBoundsLeft().intersects(temp.getBoundsRight()) || 
-	                getBoundsRight().intersects(temp.getBoundsLeft())) {
+	            if (getBoundsLeft().intersects(temp.getBoundsRight()))  {
+	            	setVelY(-15);
+	            	setVelX(5);
 	                if (damageCooldown == 0) { // Kiểm tra cooldown
+	                	gp.ui.updateHealth(1);
+	                	if (gp.ui.health <=0) {	
+	                        gp.gameState = gp.gameOverState;
+	                        gp.levelHandler.againLevel(1);
+	                    }
+	                    damageCooldown = 60; // Thời gian chờ (60 khung hình ~ 1 giây nếu FPS = 60)
+	                }
+	                return;
+	            }
+	            if (getBoundsRight().intersects(temp.getBoundsLeft()))  {
+	            	setVelY(-15);
+	            	setVelX(-5);
+	                if (damageCooldown == 0) { // Kiểm tra cooldown
+
 	                    gp.ui.updateHealth(1);
 	                    if (gp.ui.health <=0) {
 	                    	
+
 	                        gp.gameState = gp.gameOverState;
 	                        gp.levelHandler.againLevel(1);
 	                    }
