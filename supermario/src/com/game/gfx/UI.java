@@ -64,7 +64,7 @@ public class UI {
             drawPauseScreen();
             g2.setFont(arial_40);
             g2.drawString("Time: " + dFormat.format(playTime), gp.getScreenWidth() - gp.SCREEN_OFFSET * 4, gp.SCREEN_OFFSET);
-            
+
             drawHealth (g2);
             drawScore ();
         }
@@ -81,7 +81,7 @@ public class UI {
         if (gp.gameState == gp.gameOverState) {
         	g2.setFont(arial_40);
             g2.drawString("Time: " + dFormat.format(playTime), gp.getScreenWidth() - gp.SCREEN_OFFSET * 4, gp.SCREEN_OFFSET);
-            
+
         	drawGameOverScreen ();
         	drawScore ();
         }
@@ -89,7 +89,7 @@ public class UI {
         if (gp.gameState == gp.dialogueState) {
         	g2.setFont(arial_40);
             g2.drawString("Time: " + dFormat.format(playTime), gp.getScreenWidth() - gp.SCREEN_OFFSET * 4, gp.SCREEN_OFFSET);
-            
+
         	drawDialogueScreen();
         }
     }
@@ -122,13 +122,14 @@ public class UI {
     
 	public void drawHealth(Graphics2D g2) {
 		g2.drawImage(healthImage, gp.SCREEN_OFFSET, gp.SCREEN_OFFSET + 8, gp.SCREEN_OFFSET, gp.SCREEN_OFFSET, null);
+
 		g2.drawString("X " + health, gp.SCREEN_OFFSET * 2, gp.SCREEN_OFFSET * 2);
     
 	}
+
 	public void drawScore () {
 		g2.drawString("Score: " + score , gp.SCREEN_OFFSET, gp.SCREEN_OFFSET); 
 	}
-	
 	
 	public void drawPauseScreen() {
 		

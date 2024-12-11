@@ -29,18 +29,18 @@ public class Player extends GameObject {
 	private Animation currAnimation;
 	public boolean isWinning1 = false;
 	public boolean isWininning2 = false;
-	
+
 	private LinkedList<Block> removeBlocks;
 	
 	private boolean jumped = false;
 	private boolean forward = false;
-	
+
 	public Game gp;
 	
 	public Player(float x, float y, int scale, Handler handler, Game gp) {
 		super(x,y, ObjectId.Player, WIDTH, HEIGHT, scale);
 		this.handler = handler;
-		
+
 		this.gp = gp;
 		tex = Game.getTexture();
 		
@@ -122,9 +122,9 @@ public class Player extends GameObject {
 	                if (block.getIndex() == 24) {
 	                	removeBlocks.add(block);
 	                	gp.playSE(4);
-	                    
-	                    block.hit();
-	                    gp.ui.updateScore(1);
+
+	                   block.hit();
+	                   gp.ui.updateScore(1);
 	                     //  gp.gameState= gp.pauseState; // for testing    
 	                }
 	            }
@@ -140,6 +140,8 @@ public class Player extends GameObject {
 	                setX(block.getX() - getWidth());
 	                 if (block.getIndex() == 41) {
 	                	 drawCastleDialogue();
+	                	 
+	                	 
 	            }
 	            
 	            }
@@ -210,8 +212,11 @@ public class Player extends GameObject {
 	            	setVelY(-15);
 	            	setVelX(-5);
 	                if (damageCooldown == 0) { // Kiểm tra cooldown
-	                	gp.ui.updateHealth(1);
+
+	                    gp.ui.updateHealth(1);
 	                    if (gp.ui.health <=0) {
+	                    	
+
 	                        gp.gameState = gp.gameOverState;
 	                        gp.levelHandler.againLevel(1);
 	                    }
@@ -235,6 +240,7 @@ public class Player extends GameObject {
          	gp.ui.currentDialogue ="You need to have 12 points";
          	gp.levelHandler.againLevel(1);
          }
+		
 	}
 	
 	
