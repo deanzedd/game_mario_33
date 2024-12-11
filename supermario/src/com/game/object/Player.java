@@ -120,10 +120,9 @@ public class Player extends GameObject {
 	                    removeBlocks.add(block);
 	                    block.hit();
 	                    ui.updateScore(1);
-	                //  gp.gameState= gp.pauseState; // for testing    
+	                     //  gp.gameState= gp.pauseState; // for testing    
 	                }
 	            }
-
 	            // Kiểm tra va chạm từ dưới
 	            if (getBounds().intersects(block.getBounds())) {
 	                setY(block.getY() - getHeight());
@@ -134,11 +133,19 @@ public class Player extends GameObject {
 	            // Kiểm tra va chạm từ phải
 	            if (getBoundsRight().intersects(block.getBounds())) {
 	                setX(block.getX() - getWidth());
+	                 if (block.getIndex() == 41) {
+	                	 drawCastleDialogue();
+	            }
+	            
 	            }
 
 	            // Kiểm tra va chạm từ trái
 	            if (getBoundsLeft().intersects(block.getBounds())) {
 	                setX(block.getX() + block.getWidth());
+	                 if (block.getIndex() == 41) {
+	                	 drawCastleDialogue();
+	            }
+	            
 	            }
 	        }
 
@@ -184,17 +191,27 @@ public class Player extends GameObject {
 	                getBoundsRight().intersects(temp.getBoundsLeft())) {
 	                if (damageCooldown == 0) { // Kiểm tra cooldown
 	                    ui.updateHealth(1);
+	                    if (ui.health <=0) {
+	                        gp.gameState = gp.gameOverState;
+	                    }
 	                    damageCooldown = 60; // Thời gian chờ (60 khung hình ~ 1 giây nếu FPS = 60)
 	                }
 	                return;
 	            }
 	        }
-
 	    }
 	}
 
 
-	
+	public void drawCastleDialogue () {
+		 if (ui.score >= 12) {
+         	gp.gameState = gp.dialogueState;
+         	gp.ui.currentDialogue ="Congrats, now you have to fight the Boss";
+         } else {
+         	gp.gameState = gp.dialogueState;
+         	gp.ui.currentDialogue ="You need to have 12 points";
+         }
+	}
 	
 	
 
