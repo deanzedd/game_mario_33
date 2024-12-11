@@ -7,14 +7,16 @@ public class Texture {
     private final String PARENT_FOLDER = "/tile/";
 
     private final int MARIO_L_COUNT = 21; // đơn giản chỉ là số animations của mario large
-    private final int MARIO_S_COUNT = 14; // đơn giản chỉ là số animations của mario small
+    private final int MARIO_S_COUNT = 16; // đơn giản chỉ là số animations của mario small
+    private final int PLAYER_COUNT = 4;
+    
 
     private final int TILE_1_COUNT = 28;  // nhìn ảnh tileset sẽ hiểu vì sao
     private final int TILE_2_COUNT = 33;
 
     private BufferedImageLoader loader;
     private BufferedImage player_sheet, enemy_sheet, npc_sheet, block_sheet,
-                          tile_sheet, game_over_sheet, intro_sheet,goombas_sheet;
+                          tile_sheet, game_over_sheet, intro_sheet,goombas_sheet,player_sheet1;
 
     public BufferedImage[] mario_l, mario_s, tile_1, tile_2, tile_3, tile_4, pipe_1, pipe_2, debris_1, Goombas_s,Goombas_l;
 
@@ -41,6 +43,7 @@ public class Texture {
         game_over_sheet = loader.loadImage (PARENT_FOLDER+ "NES - Super Mario Bros - Time Up Game Over Screen.png");
         intro_sheet = loader.loadImage (PARENT_FOLDER+ "NES - Super Mario Bros - Title Screen.png");
         goombas_sheet = loader.loadImage (PARENT_FOLDER + "Ghost.png");
+        player_sheet1 = loader.loadImage (PARENT_FOLDER + "PLAYER3.png");
     	
     } catch (Exception e) {
     	e.printStackTrace();
@@ -54,20 +57,24 @@ public class Texture {
     
     
     private void getPlayerTextures() {
-    	int x_off=80;  
-    	int y_off=444;   // toa do pixel bat dau. luu y chon dung toa do pixel
+    	int x_off=0;  
+    	int y_off=0;   // toa do pixel bat dau. luu y chon dung toa do pixel
     	int width=16;  // chieu dai chieu rong pixel tung khung hinh
-    	int height =32;
+    	int height =16;
     	
-    	for (int i=0; i<MARIO_L_COUNT;i++) {
-    		mario_l[i]=player_sheet.getSubimage(x_off+i*(width+1), y_off, width, height);
+    	for (int i=0; i<PLAYER_COUNT;i++) {
+    		mario_s[i]=player_sheet1.getSubimage(x_off+i*(width), y_off, width, height);
+    	}
+    	for (int i=0; i<PLAYER_COUNT;i++) {
+    		mario_s[i+4]=player_sheet1.getSubimage(x_off+i*(width), y_off + height, width, height);
+    	}
+    	for (int i=0; i<PLAYER_COUNT;i++) {
+    		mario_s[i+8]=player_sheet1.getSubimage(x_off+i*(width), y_off +2* height, width, height);
+    	}
+    	for (int i=0; i<PLAYER_COUNT;i++) {
+    		mario_s[i+12]=player_sheet1.getSubimage(x_off+i*(width), y_off +3* height, width, height);
     	}
     	
-    	y_off+=height+1; // chọn điểm pixel cho mario nho
-    	height =16;
-    	for (int i=0; i<MARIO_S_COUNT;i++) {
-    		mario_s[i]=player_sheet.getSubimage(x_off+i*(width+1), y_off, width, height);
-    	}
     	
     }
     

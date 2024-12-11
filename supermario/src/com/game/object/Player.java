@@ -15,8 +15,8 @@ import com.game.object.util.Handler;
 import com.game.object.util.ObjectId;
 
 public class Player extends GameObject {
-	private static final float WIDTH = 16;
-	private static final float HEIGHT = 16;
+	private static final float WIDTH = 32;
+	private static final float HEIGHT = 32;
 	private Handler handler;
 	private Texture tex;
 	private int damageCooldown = 0; // Thời gian chờ giữa các lần mất máu
@@ -49,7 +49,7 @@ public class Player extends GameObject {
 		spriteS = tex.getMarioS();
 		
 		playerWalkL = new Animation(5, spriteL[1], spriteL[2], spriteL[3]);	// Lay animation nhan vat voi 3 hinh SpriteLarge dau tien
-		playerWalkS = new Animation(5, spriteS[1], spriteS[2], spriteS[3]);	
+		playerWalkS = new Animation(5, spriteS[9], spriteS[10], spriteS[11]);	
 		
 		state = PlayerState.Small;
 		currSprite = spriteS;
@@ -80,10 +80,12 @@ public class Player extends GameObject {
 	public void render(Graphics g) {
 	    if (jumped) { 	// khi nhan vat nhay
 	    	if (forward) {	// kiem tra xem co phai nhay len khong
-	    		g.drawImage(currSprite[5], (int) getX(), (int) getY(), (int) getWidth(), (int) getHeight(), null);
+	    		//g.drawImage(currSprite[5], (int) getX(), (int) getY(), (int) getWidth(), (int) getHeight(), null);
+	    		g.drawImage(currSprite[5], (int) (getX() + getWidth()), (int) getY(), (int) -getWidth(), (int) getHeight(), null);
 	    		
 	    	} else {
-	    		g.drawImage(currSprite[5], (int) (getX() + getWidth()), (int) getY(), (int) -getWidth(), (int) getHeight(), null);
+	    		//g.drawImage(currSprite[5], (int) (getX() + getWidth()), (int) getY(), (int) -getWidth(), (int) getHeight(), null);
+	    		g.drawImage(currSprite[5], (int) getX(), (int) getY(), (int) getWidth(), (int) getHeight(), null);
 	    	} 
 	    } else if (getVelX() > 0) {	// khi di sang phai
 	    	currAnimation.drawAnimation(g, (int) getX(), (int) getY(), (int) getWidth(), (int) getHeight());

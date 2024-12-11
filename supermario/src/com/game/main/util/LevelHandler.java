@@ -129,7 +129,7 @@ public class LevelHandler {
 				
 				if (red== green && red== blue) {
 					if (red==0) {
-						handler.setPlayer(new Player(i*16, j*16,3,handler,ui, gp));
+						handler.setPlayer(new Player(i*16, j*16,2,handler,ui, gp));
 					}
 				}
 				
