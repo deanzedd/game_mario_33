@@ -21,7 +21,8 @@ public class LevelHandler {
 	private Handler handler;
     public UI ui;
 	public Game gp;
-    
+	private int currentLevel = 1; // Theo dõi map hiện tại
+
 	public LevelHandler (Handler handler,UI ui, Game gp) {
 		this.handler = handler;
 		this.ui = ui;
@@ -30,9 +31,12 @@ public class LevelHandler {
 		
 	}
 	public void start() {
-		setLevel(PARENT_FOLDER + "/map1_5.png");
-		loadCharacters (PARENT_FOLDER + "/map2.png");
+		loadLevel(1);
 	}
+	public void loadLevel(int level) {
+        setLevel(PARENT_FOLDER + "/map" + level + ".png");
+        loadCharacters(PARENT_FOLDER + "/objectsMap"+ level +".png");
+    }
 	public void setLevel(String levelTilesPath) {
 		this.levelTiles = loader.loadImage(levelTilesPath);
 		
@@ -129,11 +133,27 @@ public class LevelHandler {
 				
 				if (red== green && red== blue) {
 					if (red==0) {
-						handler.setPlayer(new Player(i*16, j*16,3,handler,ui, gp));
+						handler.setPlayer(new Player(i*16, j*16,3,handler,gp));
 					}
 				}
 				
 			}
 		}
 	}
+	
+	 public void nextLevel() {
+		    gp.ui.health = gp.ui.secondRoundHealth;
+	        currentLevel++;
+	        handler.clearAllObjects(); // Xóa tất cả các object hiện tại
+	        loadLevel(currentLevel); // Tải map tiếp theo
+	    }
+	 public void againLevel(int i) {
+		    if (i==1) {
+		    	gp.ui.health = gp.ui.firstRoundHealth;
+		    } else if (i==2) {
+		    	gp.ui.health = gp.ui.secondRoundHealth;
+		    }
+	        handler.clearAllObjects(); // Xóa tất cả các object hiện tại
+	        loadLevel(i); // Tải lại map hiện tại
+	    }
 }

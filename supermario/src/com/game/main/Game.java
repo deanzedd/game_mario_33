@@ -43,7 +43,7 @@ public class Game extends Canvas implements Runnable {
     private Handler handler;
     private Camera cam;
     private static Texture tex;
-    private LevelHandler levelHandler;
+    public LevelHandler levelHandler;
 
     // GAME STATE
     public int gameState;
@@ -104,7 +104,7 @@ public class Game extends Canvas implements Runnable {
         running = true;
     }
 
-    private synchronized void stop() {
+    public synchronized void stop() {
         try {
             running = false;
             if (thread != null) {
