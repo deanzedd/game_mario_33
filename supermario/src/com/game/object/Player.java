@@ -15,8 +15,8 @@ import com.game.object.util.Handler;
 import com.game.object.util.ObjectId;
 
 public class Player extends GameObject {
-	private static final float WIDTH = 16;
-	private static final float HEIGHT = 16;
+	private static final float WIDTH = 32;
+	private static final float HEIGHT = 32;
 	private Handler handler;
 	private Texture tex;
 	private int damageCooldown = 0; // Thời gian chờ giữa các lần mất máu
@@ -49,7 +49,7 @@ public class Player extends GameObject {
 		spriteS = tex.getMarioS();
 		
 		playerWalkL = new Animation(5, spriteL[1], spriteL[2], spriteL[3]);	// Lay animation nhan vat voi 3 hinh SpriteLarge dau tien
-		playerWalkS = new Animation(5, spriteS[1], spriteS[2], spriteS[3]);	
+		playerWalkS = new Animation(5, spriteS[9], spriteS[10], spriteS[11]);	
 		
 		state = PlayerState.Small;
 		currSprite = spriteS;
@@ -80,10 +80,12 @@ public class Player extends GameObject {
 	public void render(Graphics g) {
 	    if (jumped) { 	// khi nhan vat nhay
 	    	if (forward) {	// kiem tra xem co phai nhay len khong
-	    		g.drawImage(currSprite[5], (int) getX(), (int) getY(), (int) getWidth(), (int) getHeight(), null);
+	    		//g.drawImage(currSprite[5], (int) getX(), (int) getY(), (int) getWidth(), (int) getHeight(), null);
+	    		g.drawImage(currSprite[5], (int) (getX() + getWidth()), (int) getY(), (int) -getWidth(), (int) getHeight(), null);
 	    		
 	    	} else {
-	    		g.drawImage(currSprite[5], (int) (getX() + getWidth()), (int) getY(), (int) -getWidth(), (int) getHeight(), null);
+	    		//g.drawImage(currSprite[5], (int) (getX() + getWidth()), (int) getY(), (int) -getWidth(), (int) getHeight(), null);
+	    		g.drawImage(currSprite[5], (int) getX(), (int) getY(), (int) getWidth(), (int) getHeight(), null);
 	    	} 
 	    } else if (getVelX() > 0) {	// khi di sang phai
 	    	currAnimation.drawAnimation(g, (int) getX(), (int) getY(), (int) getWidth(), (int) getHeight());
@@ -120,10 +122,9 @@ public class Player extends GameObject {
 	                    removeBlocks.add(block);
 	                    block.hit();
 	                    ui.updateScore(1);
-	                //  gp.gameState= gp.pauseState; // for testing    
+	                     //  gp.gameState= gp.pauseState; // for testing    
 	                }
 	            }
-
 	            // Kiểm tra va chạm từ dưới
 	            if (getBounds().intersects(block.getBounds())) {
 	                setY(block.getY() - getHeight());
@@ -134,11 +135,19 @@ public class Player extends GameObject {
 	            // Kiểm tra va chạm từ phải
 	            if (getBoundsRight().intersects(block.getBounds())) {
 	                setX(block.getX() - getWidth());
+	                 if (block.getIndex() == 41) {
+	                	 drawCastleDialogue();
+	            }
+	            
 	            }
 
 	            // Kiểm tra va chạm từ trái
 	            if (getBoundsLeft().intersects(block.getBounds())) {
 	                setX(block.getX() + block.getWidth());
+	                 if (block.getIndex() == 41) {
+	                	 drawCastleDialogue();
+	            }
+	            
 	            }
 	        }
 
@@ -195,17 +204,27 @@ public class Player extends GameObject {
 	            	setVelX(-5);
 	                if (damageCooldown == 0) { // Kiểm tra cooldown
 	                    ui.updateHealth(1);
+	                    if (ui.health <=0) {
+	                        gp.gameState = gp.gameOverState;
+	                    }
 	                    damageCooldown = 60; // Thời gian chờ (60 khung hình ~ 1 giây nếu FPS = 60)
 	                }
 	                return;
 	            }
 	        }
-
 	    }
 	}
 
 
-	
+	public void drawCastleDialogue () {
+		 if (ui.score >= 12) {
+         	gp.gameState = gp.dialogueState;
+         	gp.ui.currentDialogue ="Congrats, now you have to fight the Boss";
+         } else {
+         	gp.gameState = gp.dialogueState;
+         	gp.ui.currentDialogue ="You need to have 12 points";
+         }
+	}
 	
 	
 

@@ -83,7 +83,7 @@ public class LevelHandler {
 	                handler.addObj(new Block(i*16 ,j*16 ,16 ,16 ,40 ,3, true )); 
 	            }
 	            if (red==255 && green==100 && blue==100) {
-	                handler.addObj(new Block(i*16 ,j*16 ,16 ,16 ,41 ,3, true )); 
+	                handler.addObj(new Block(i*16 ,j*16 ,16 ,16 ,41 ,3, false )); 
 	            }
 				
 				//Cột
@@ -129,7 +129,7 @@ public class LevelHandler {
 				
 				if (red== green && red== blue) {
 					if (red==0) {
-						handler.setPlayer(new Player(i*16, j*16,3,handler,ui, gp));
+						handler.setPlayer(new Player(i*16, j*16,2,handler,ui, gp));
 					}
 				}
 				
