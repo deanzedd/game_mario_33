@@ -117,17 +117,6 @@ public class Goombas extends GameObject {
 		}
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 
 	@Override
 	public void render(Graphics g) {
@@ -137,26 +126,6 @@ public class Goombas extends GameObject {
 	}
 
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 	@Override
 	public Rectangle getBounds() {
 		// TODO Auto-generated method stub

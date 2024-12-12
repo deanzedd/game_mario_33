@@ -1,5 +1,6 @@
 package com.game.gfx;
 
+import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
@@ -61,6 +62,7 @@ public class UI {
 
         // PAUSE STATE
         if (gp.gameState == gp.pauseState) {
+        	g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
             drawPauseScreen();
             g2.setFont(arial_40);
            
@@ -71,6 +73,7 @@ public class UI {
 
         // PLAY STATE
         if (gp.gameState == gp.playState) {
+        	g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
             g2.setFont(arial_40);
             playTime += (double) 1 / 180;
             drawTime();
@@ -79,12 +82,14 @@ public class UI {
         }
         // GAME OVER STATE
         if (gp.gameState == gp.gameOverState) {
+        	g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
         	drawGameOverScreen ();
         	drawScore ();
         	drawTime();
         }
         // DIALOGUE STATE
         if (gp.gameState == gp.dialogueState) {
+        	g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
         	g2.setFont(arial_40);
         	drawDialogueScreen();
         }

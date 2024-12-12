@@ -1,5 +1,6 @@
 package com.game.object;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -83,25 +84,53 @@ public class Player extends GameObject {
 
 	@Override
 	public void render(Graphics g) {
-	    if (jumped) { 	// khi nhan vat nhay
-	    	if (forward) {	// kiem tra xem co phai nhay len khong
-	    		//g.drawImage(currSprite[5], (int) getX(), (int) getY(), (int) getWidth(), (int) getHeight(), null);
-	    		g.drawImage(currSprite[5], (int) (getX() + getWidth()), (int) getY(), (int) -getWidth(), (int) getHeight(), null);
-	    		
-	    	} else {
-	    		//g.drawImage(currSprite[5], (int) (getX() + getWidth()), (int) getY(), (int) -getWidth(), (int) getHeight(), null);
-	    		g.drawImage(currSprite[5], (int) getX(), (int) getY(), (int) getWidth(), (int) getHeight(), null);
-	    	} 
-	    } else if (getVelX() > 0) {	// khi di sang phai
-	    	currAnimation.drawAnimation(g, (int) getX(), (int) getY(), (int) getWidth(), (int) getHeight());
-	    	forward = true;
-	    } else if (getVelX() < 0) {	// khi di sang trai
-	    	currAnimation.drawAnimation(g, (int) (getX() + getWidth()), (int) getY(), (int) -getWidth(), (int) getHeight());
-	    	forward = false;
-	    } else {	// neu dung yen
-	    	g.drawImage(currSprite[0], (int) getX(), (int) getY(), (int) getWidth(), (int) getHeight(), null);
-	    }
-	    //showBounds(g);
+		Graphics2D g2 = (Graphics2D) g;
+		if (damageCooldown<=60&& damageCooldown >0) {
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+			 if (jumped) { 	// khi nhan vat nhay
+			    	if (forward) {	// kiem tra xem co phai nhay len khong
+			    		//g.drawImage(currSprite[5], (int) getX(), (int) getY(), (int) getWidth(), (int) getHeight(), null);
+			    		g2.drawImage(currSprite[5], (int) (getX() + getWidth()), (int) getY(), (int) -getWidth(), (int) getHeight(), null);
+			    		
+			    	} else {
+			    		//g.drawImage(currSprite[5], (int) (getX() + getWidth()), (int) getY(), (int) -getWidth(), (int) getHeight(), null);
+			    		g2.drawImage(currSprite[5], (int) getX(), (int) getY(), (int) getWidth(), (int) getHeight(), null);
+			    	} 
+			    } else if (getVelX() > 0) {	// khi di sang phai
+			    	currAnimation.drawAnimation(g, (int) getX(), (int) getY(), (int) getWidth(), (int) getHeight());
+			    	forward = true;
+			    } else if (getVelX() < 0) {	// khi di sang trai
+			    	currAnimation.drawAnimation(g, (int) (getX() + getWidth()), (int) getY(), (int) -getWidth(), (int) getHeight());
+			    	forward = false;
+			    } else {	// neu dung yen
+			    	g.drawImage(currSprite[0], (int) getX(), (int) getY(), (int) getWidth(), (int) getHeight(), null);
+			    }
+			    //showBounds(g);
+		} else {
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+			 if (jumped) { 	// khi nhan vat nhay
+			    	if (forward) {	// kiem tra xem co phai nhay len khong
+			    		//g.drawImage(currSprite[5], (int) getX(), (int) getY(), (int) getWidth(), (int) getHeight(), null);
+			    		g2.drawImage(currSprite[5], (int) (getX() + getWidth()), (int) getY(), (int) -getWidth(), (int) getHeight(), null);
+			    		
+			    	} else {
+			    		//g.drawImage(currSprite[5], (int) (getX() + getWidth()), (int) getY(), (int) -getWidth(), (int) getHeight(), null);
+			    		g2.drawImage(currSprite[5], (int) getX(), (int) getY(), (int) getWidth(), (int) getHeight(), null);
+			    	} 
+			    } else if (getVelX() > 0) {	// khi di sang phai
+			    	currAnimation.drawAnimation(g, (int) getX(), (int) getY(), (int) getWidth(), (int) getHeight());
+			    	forward = true;
+			    } else if (getVelX() < 0) {	// khi di sang trai
+			    	currAnimation.drawAnimation(g, (int) (getX() + getWidth()), (int) getY(), (int) -getWidth(), (int) getHeight());
+			    	forward = false;
+			    } else {	// neu dung yen
+			    	g.drawImage(currSprite[0], (int) getX(), (int) getY(), (int) getWidth(), (int) getHeight(), null);
+			    }
+			    //showBounds(g);
+			
+		}
+		
+	   
 	}
 	
 	private void collision() {
