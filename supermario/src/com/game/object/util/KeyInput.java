@@ -103,8 +103,9 @@ public class KeyInput extends KeyAdapter {
 		
 		if (gp.gameState == gp.gameOverState) {
 			if (key == KeyEvent.VK_ENTER) {
+				
+				gp.levelHandler.againLevel(1);
 				gp.gameState= gp.playState;
-
 				
 			}
 		}

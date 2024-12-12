@@ -75,6 +75,9 @@ public class Player extends GameObject {
 	    }
 		currAnimation.runAnimation();
 		
+		if (getY()>1000) {
+			gp.gameState= gp.gameOverState;
+		}
 		
 	}
 
@@ -163,11 +166,7 @@ public class Player extends GameObject {
 	            // Bỏ qua Pipe có thể đi xuyên qua
 	            if (pipe.enterable) continue;
 
-	            // Kiểm tra va chạm từ trên
-	            if (getBoundsTop().intersects(pipe.getBounds())) {
-	                setY(pipe.getY() + pipe.getHeight());
-	                setVelY(0);
-	            }
+	            
 
 	            // Kiểm tra va chạm từ dưới
 	            if (getBounds().intersects(pipe.getBounds())) {
@@ -175,17 +174,22 @@ public class Player extends GameObject {
 	                setVelY(0);
 	                jumped = false;
 	            }
-
-	            // Kiểm tra va chạm từ phải
-	            if (getBoundsRight().intersects(pipe.getBounds())) {
-	                setX(pipe.getX() - getWidth());
-	            }
-
 	            // Kiểm tra va chạm từ trái
 	            if (getBoundsLeft().intersects(pipe.getBounds())) {
 	                setX(pipe.getX() + pipe.getWidth());
 
 	            }
+	            // Kiểm tra va chạm từ trên
+	            if (getBoundsTop().intersects(pipe.getBounds())) {
+	                setY(pipe.getY() + pipe.getHeight());
+	                setVelY(0);
+	            }
+	            // Kiểm tra va chạm từ phải
+	            if (getBoundsRight().intersects(pipe.getBounds())) {
+	                setX(pipe.getX() - getWidth());
+	            }
+
+	            
 	        }
 
 	        // Xử lý Goombas
@@ -202,7 +206,7 @@ public class Player extends GameObject {
 	                	gp.ui.updateHealth(1);
 	                	if (gp.ui.health <=0) {	
 	                        gp.gameState = gp.gameOverState;
-	                        gp.levelHandler.againLevel(1);
+	                       
 	                    }
 	                    damageCooldown = 60; // Thời gian chờ (60 khung hình ~ 1 giây nếu FPS = 60)
 	                }

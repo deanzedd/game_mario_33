@@ -40,7 +40,7 @@ public class Game extends Canvas implements Runnable {
 
     // Game components
     private Thread thread;
-    private Handler handler;
+    public Handler handler;
     private Camera cam;
     private static Texture tex;
     public LevelHandler levelHandler;
@@ -155,10 +155,6 @@ public class Game extends Canvas implements Runnable {
         if (gameState == playState) {
             handler.tick();  //UPDATE
             cam.tick(handler.getPlayer());
-        }
-        if (gameState == gameOverState) {
-        	stopMusic();
-    		playSE(3);
         }
     	
     }

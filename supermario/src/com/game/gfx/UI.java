@@ -18,7 +18,7 @@ public class UI {
     public int commandNum = 0;
     public int titleScreenState = 0; // 0 = the first screen, 1 = the second screen
     public double playTime;
-    public int score; // Thêm biến lưu trữ điểm
+    public int score=0; // Thêm biến lưu trữ điểm
     public int health =3;
     public int firstRoundHealth =3;
     public int secondRoundHealth = 5;
@@ -63,8 +63,8 @@ public class UI {
         if (gp.gameState == gp.pauseState) {
             drawPauseScreen();
             g2.setFont(arial_40);
-            g2.drawString("Time: " + dFormat.format(playTime), gp.getScreenWidth() - gp.SCREEN_OFFSET * 4, gp.SCREEN_OFFSET);
-
+           
+            drawTime();
             drawHealth (g2);
             drawScore ();
         }
@@ -73,23 +73,19 @@ public class UI {
         if (gp.gameState == gp.playState) {
             g2.setFont(arial_40);
             playTime += (double) 1 / 180;
-            g2.drawString("Time: " + dFormat.format(playTime), gp.getScreenWidth() - gp.SCREEN_OFFSET * 4, gp.SCREEN_OFFSET);
+            drawTime();
             drawHealth (g2);
             drawScore ();
         }
         // GAME OVER STATE
         if (gp.gameState == gp.gameOverState) {
-        	g2.setFont(arial_40);
-            g2.drawString("Time: " + dFormat.format(playTime), gp.getScreenWidth() - gp.SCREEN_OFFSET * 4, gp.SCREEN_OFFSET);
-
         	drawGameOverScreen ();
         	drawScore ();
+        	drawTime();
         }
         // DIALOGUE STATE
         if (gp.gameState == gp.dialogueState) {
         	g2.setFont(arial_40);
-            g2.drawString("Time: " + dFormat.format(playTime), gp.getScreenWidth() - gp.SCREEN_OFFSET * 4, gp.SCREEN_OFFSET);
-
         	drawDialogueScreen();
         }
     }
@@ -121,6 +117,7 @@ public class UI {
     }
     
 	public void drawHealth(Graphics2D g2) {
+		g2.setFont(arial_40);
 		g2.drawImage(healthImage, gp.SCREEN_OFFSET, gp.SCREEN_OFFSET + 8, gp.SCREEN_OFFSET, gp.SCREEN_OFFSET, null);
 
 		g2.drawString("X " + health, gp.SCREEN_OFFSET * 2, gp.SCREEN_OFFSET * 2);
@@ -128,9 +125,13 @@ public class UI {
 	}
 
 	public void drawScore () {
+		g2.setFont(arial_40);
 		g2.drawString("Score: " + score , gp.SCREEN_OFFSET, gp.SCREEN_OFFSET); 
 	}
-	
+	public void drawTime() {
+		g2.setFont(arial_40);
+		 g2.drawString("Time: " + dFormat.format(playTime), gp.getScreenWidth() - gp.SCREEN_OFFSET * 4, gp.SCREEN_OFFSET);
+	}
 	public void drawPauseScreen() {
 		
 		String text = "PAUSED";
