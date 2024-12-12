@@ -5,6 +5,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import com.game.main.Game;
+import com.game.object.Player;
 
 
 //extending KeyAdapter allows the extending class (Keyinput) to become a KeyEvent Listener 
@@ -102,16 +103,27 @@ public class KeyInput extends KeyAdapter {
 		
 		if (gp.gameState == gp.gameOverState) {
 			if (key == KeyEvent.VK_ENTER) {
-				System.exit(0);
+				gp.gameState= gp.playState;
+
 				
 			}
 		}
 		
 		if (gp.gameState == gp.dialogueState) {
-			if (key == KeyEvent.VK_ENTER) {
-				gp.gameState = gp.playState;
-			}
-		}
+
+	        if (key == KeyEvent.VK_ENTER) {
+
+	            // Ensure you are accessing the Player's winning state through handler
+	            Player player = handler.getPlayer();  // Get the current player
+
+	            if (gp.ui.score>=12) {
+	                gp.gameState = gp.playState;
+	            } else {
+	                gp.gameState = gp.gameOverState;  // Game Over
+	            }
+	        }
+	    }
+
 		
 		if(key == KeyEvent.VK_ESCAPE) { //VK == virtual key
 			System.exit(0);

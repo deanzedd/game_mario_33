@@ -17,7 +17,8 @@ public class Sound {
 		soundURL[1] = getClass().getResource("/sound/gameMusic_1.wav");
 		soundURL[2] = getClass().getResource("/sound/jumpSound_1.wav");
 		soundURL[3] = getClass().getResource("/sound/gameover.wav");
-		soundURL[4] = getClass().getResource("/sound/coin.wav");
+		soundURL[4] = getClass().getResource("/sound/coin_amplified.wav");
+		soundURL[5] = getClass().getResource("/sound/marioDies.wav");
 	}
 	
 	public void setFile(int i) {

@@ -18,8 +18,10 @@ public class UI {
     public int commandNum = 0;
     public int titleScreenState = 0; // 0 = the first screen, 1 = the second screen
     public double playTime;
-    public int score = 0; // Thêm biến lưu trữ điểm
-    public int health = 3; 
+    public int score; // Thêm biến lưu trữ điểm
+    public int health =3;
+    public int firstRoundHealth =3;
+    public int secondRoundHealth = 5;
     DecimalFormat dFormat = new DecimalFormat("#0.00");
     public String currentDialogue = "";
 
@@ -62,8 +64,9 @@ public class UI {
             drawPauseScreen();
             g2.setFont(arial_40);
             g2.drawString("Time: " + dFormat.format(playTime), gp.getScreenWidth() - gp.SCREEN_OFFSET * 4, gp.SCREEN_OFFSET);
-            g2.drawString("Score: " + score, gp.SCREEN_OFFSET, gp.SCREEN_OFFSET);
+
             drawHealth (g2);
+            drawScore ();
         }
 
         // PLAY STATE
@@ -71,21 +74,22 @@ public class UI {
             g2.setFont(arial_40);
             playTime += (double) 1 / 180;
             g2.drawString("Time: " + dFormat.format(playTime), gp.getScreenWidth() - gp.SCREEN_OFFSET * 4, gp.SCREEN_OFFSET);
-            g2.drawString("Score: " + score, gp.SCREEN_OFFSET, gp.SCREEN_OFFSET); // Hiển thị điểm
             drawHealth (g2);
+            drawScore ();
         }
         // GAME OVER STATE
         if (gp.gameState == gp.gameOverState) {
         	g2.setFont(arial_40);
             g2.drawString("Time: " + dFormat.format(playTime), gp.getScreenWidth() - gp.SCREEN_OFFSET * 4, gp.SCREEN_OFFSET);
-            g2.drawString("Score: " + score, gp.SCREEN_OFFSET, gp.SCREEN_OFFSET);
+
         	drawGameOverScreen ();
+        	drawScore ();
         }
         // DIALOGUE STATE
         if (gp.gameState == gp.dialogueState) {
         	g2.setFont(arial_40);
             g2.drawString("Time: " + dFormat.format(playTime), gp.getScreenWidth() - gp.SCREEN_OFFSET * 4, gp.SCREEN_OFFSET);
-            g2.drawString("Score: " + score, gp.SCREEN_OFFSET, gp.SCREEN_OFFSET);
+
         	drawDialogueScreen();
         }
     }
@@ -117,29 +121,15 @@ public class UI {
     }
     
 	public void drawHealth(Graphics2D g2) {
-		switch (health) {
-        case 3:
-        	g2.drawImage(healthImage, gp.SCREEN_OFFSET, gp.SCREEN_OFFSET+8, gp.SCREEN_OFFSET, gp.SCREEN_OFFSET,null);
-        	g2.drawString("X 3", gp.SCREEN_OFFSET*2, gp.SCREEN_OFFSET*2);
-            break;
-        case 2:
-        	g2.drawImage(healthImage, gp.SCREEN_OFFSET, gp.SCREEN_OFFSET+8, gp.SCREEN_OFFSET, gp.SCREEN_OFFSET,null);
-        	g2.drawString("X 2", gp.SCREEN_OFFSET*2, gp.SCREEN_OFFSET*2);
-            break;
-        case 1:
-        	g2.drawImage(healthImage, gp.SCREEN_OFFSET, gp.SCREEN_OFFSET+8, gp.SCREEN_OFFSET, gp.SCREEN_OFFSET,null);
-        	g2.drawString("X 1", gp.SCREEN_OFFSET*2, gp.SCREEN_OFFSET*2);
-            break;
-        case 0:
-        	g2.drawImage(healthImage, gp.SCREEN_OFFSET, gp.SCREEN_OFFSET+8, gp.SCREEN_OFFSET, gp.SCREEN_OFFSET,null);
-        	g2.drawString("X 0", gp.SCREEN_OFFSET*2, gp.SCREEN_OFFSET*2);
+		g2.drawImage(healthImage, gp.SCREEN_OFFSET, gp.SCREEN_OFFSET + 8, gp.SCREEN_OFFSET, gp.SCREEN_OFFSET, null);
 
-           
-            // Chuyển sang trạng thái kết thúc trò chơi
-            break;
-    }
+		g2.drawString("X " + health, gp.SCREEN_OFFSET * 2, gp.SCREEN_OFFSET * 2);
+    
 	}
-	
+
+	public void drawScore () {
+		g2.drawString("Score: " + score , gp.SCREEN_OFFSET, gp.SCREEN_OFFSET); 
+	}
 	
 	public void drawPauseScreen() {
 		

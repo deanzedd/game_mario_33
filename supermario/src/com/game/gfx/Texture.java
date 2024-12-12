@@ -16,9 +16,9 @@ public class Texture {
 
     private BufferedImageLoader loader;
     private BufferedImage player_sheet, enemy_sheet, npc_sheet, block_sheet,
-                          tile_sheet, game_over_sheet, intro_sheet,goombas_sheet,player_sheet1;
+                          tile_sheet, game_over_sheet, intro_sheet,goombas_sheet,player_sheet1,nigga_sheet,bossnigga_sheet;
 
-    public BufferedImage[] mario_l, mario_s, tile_1, tile_2, tile_3, tile_4, pipe_1, pipe_2, debris_1, Goombas_s,Goombas_l;
+    public BufferedImage[] mario_l, mario_s, tile_1, tile_2, tile_3, tile_4, pipe_1, pipe_2, debris_1, Goombas_s,Goombas_l,nigga,bossnigga;
 
     public Texture() {
     	Goombas_s = new BufferedImage[1];
@@ -33,7 +33,8 @@ public class Texture {
         pipe_2 = new BufferedImage[4];
         debris_1 = new BufferedImage[4];
         loader = new BufferedImageLoader();
-    
+        nigga = new BufferedImage[1];
+        bossnigga = new BufferedImage[MARIO_S_COUNT];
     try{
     	player_sheet = loader.loadImage (PARENT_FOLDER + "NES - Super Mario Bros - Mario Forms.png");
     	enemy_sheet = loader.loadImage (PARENT_FOLDER + "NES - Super Mario Bros - Sprites.png");
@@ -44,6 +45,8 @@ public class Texture {
         intro_sheet = loader.loadImage (PARENT_FOLDER+ "NES - Super Mario Bros - Title Screen.png");
         goombas_sheet = loader.loadImage (PARENT_FOLDER + "Ghost.png");
         player_sheet1 = loader.loadImage (PARENT_FOLDER + "PLAYER3.png");
+        nigga_sheet =loader.loadImage (PARENT_FOLDER + "Nigga.png");
+        bossnigga_sheet = loader.loadImage (PARENT_FOLDER + "PLAYER2.png");
     	
     } catch (Exception e) {
     	e.printStackTrace();
@@ -53,6 +56,8 @@ public class Texture {
     getPipeTexture();
     getDebrisTextures();
     getGoombasTextures();
+    getNiggaTextures();
+    getBossNiggaTextures();
     }
     
     
@@ -73,6 +78,28 @@ public class Texture {
     	}
     	for (int i=0; i<PLAYER_COUNT;i++) {
     		mario_s[i+12]=player_sheet1.getSubimage(x_off+i*(width), y_off +3* height, width, height);
+    	}
+    	
+    	
+    }
+    
+    private void getBossNiggaTextures() {
+    	int x_off=0;  
+    	int y_off=0;   // toa do pixel bat dau. luu y chon dung toa do pixel
+    	int width=16;  // chieu dai chieu rong pixel tung khung hinh
+    	int height =16;
+    	
+    	for (int i=0; i<PLAYER_COUNT;i++) {
+    		bossnigga[i]=bossnigga_sheet.getSubimage(x_off+i*(width), y_off, width, height);
+    	}
+    	for (int i=0; i<PLAYER_COUNT;i++) {
+    		bossnigga[i+4]=bossnigga_sheet.getSubimage(x_off+i*(width), y_off + height, width, height);
+    	}
+    	for (int i=0; i<PLAYER_COUNT;i++) {
+    		bossnigga[i+8]=bossnigga_sheet.getSubimage(x_off+i*(width), y_off +2* height, width, height);
+    	}
+    	for (int i=0; i<PLAYER_COUNT;i++) {
+    		bossnigga[i+12]=bossnigga_sheet.getSubimage(x_off+i*(width), y_off +3* height, width, height);
     	}
     	
     	
@@ -158,6 +185,26 @@ public class Texture {
     	
     	
     }
+    
+    private void getNiggaTextures() {
+    	int x_off=213;  
+    	int y_off=39;   // toa do pixel bat dau. luu y chon dung toa do pixel
+    	int width=15;  // chieu dai chieu rong pixel tung khung hinh
+    	int height =15;
+    	
+    	
+    		nigga[0]= nigga_sheet.getSubimage(x_off, y_off, width, height);
+    	
+    	
+    }
+    
+    public BufferedImage[] getBossNiggaS() {
+    	return bossnigga;
+    }
+    public BufferedImage[] getNiggaS() {
+    	return nigga;
+    }
+    
     
     public BufferedImage[] getGoombasS() {
     	return Goombas_s;

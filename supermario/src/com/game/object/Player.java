@@ -27,18 +27,20 @@ public class Player extends GameObject {
 	private Animation playerWalkL, playerWalkS;	// Hieu ung PlayerWalkLarge, PlayerWalkSmall
 	private BufferedImage[] currSprite;
 	private Animation currAnimation;
-	
+	public boolean isWinning1 = false;
+	public boolean isWininning2 = false;
+
 	private LinkedList<Block> removeBlocks;
 	
 	private boolean jumped = false;
 	private boolean forward = false;
-	public UI ui;
+
 	public Game gp;
 	
-	public Player(float x, float y, int scale, Handler handler, UI ui, Game gp) {
+	public Player(float x, float y, int scale, Handler handler, Game gp) {
 		super(x,y, ObjectId.Player, WIDTH, HEIGHT, scale);
 		this.handler = handler;
-		this.ui=ui;
+
 		this.gp = gp;
 		tex = Game.getTexture();
 		
@@ -118,10 +120,11 @@ public class Player extends GameObject {
 	                setY(block.getY() + block.getHeight());
 	                setVelY(0);
 	                if (block.getIndex() == 24) {
+	                	removeBlocks.add(block);
 	                	gp.playSE(4);
-	                    removeBlocks.add(block);
-	                    block.hit();
-	                    ui.updateScore(1);
+
+	                   block.hit();
+	                   gp.ui.updateScore(1);
 	                     //  gp.gameState= gp.pauseState; // for testing    
 	                }
 	            }
@@ -137,6 +140,8 @@ public class Player extends GameObject {
 	                setX(block.getX() - getWidth());
 	                 if (block.getIndex() == 41) {
 	                	 drawCastleDialogue();
+	                	 
+	                	 
 	            }
 	            
 	            }
@@ -184,7 +189,7 @@ public class Player extends GameObject {
 	        }
 
 	        // Xử lý Goombas
-	        if (temp.getId() == ObjectId.Goombas) {
+	        if ((temp.getId() == ObjectId.Goombas)||(temp.getId() == ObjectId.Nigga)||(temp.getId() == ObjectId.BossNigga)) {
 	            if (getBounds().intersects(temp.getBoundsTop())) {
 	            	setVelY(-15);
 	                handler.removeObj(temp);
@@ -194,7 +199,11 @@ public class Player extends GameObject {
 	            	setVelY(-15);
 	            	setVelX(5);
 	                if (damageCooldown == 0) { // Kiểm tra cooldown
-	                    ui.updateHealth(1);
+	                	gp.ui.updateHealth(1);
+	                	if (gp.ui.health <=0) {	
+	                        gp.gameState = gp.gameOverState;
+	                        gp.levelHandler.againLevel(1);
+	                    }
 	                    damageCooldown = 60; // Thời gian chờ (60 khung hình ~ 1 giây nếu FPS = 60)
 	                }
 	                return;
@@ -203,9 +212,13 @@ public class Player extends GameObject {
 	            	setVelY(-15);
 	            	setVelX(-5);
 	                if (damageCooldown == 0) { // Kiểm tra cooldown
-	                    ui.updateHealth(1);
-	                    if (ui.health <=0) {
+
+	                    gp.ui.updateHealth(1);
+	                    if (gp.ui.health <=0) {
+	                    	
+
 	                        gp.gameState = gp.gameOverState;
+	                        gp.levelHandler.againLevel(1);
 	                    }
 	                    damageCooldown = 60; // Thời gian chờ (60 khung hình ~ 1 giây nếu FPS = 60)
 	                }
@@ -217,13 +230,17 @@ public class Player extends GameObject {
 
 
 	public void drawCastleDialogue () {
-		 if (ui.score >= 12) {
+		 if (gp.ui.score >= 12) {
          	gp.gameState = gp.dialogueState;
          	gp.ui.currentDialogue ="Congrats, now you have to fight the Boss";
-         } else {
+         	isWinning1 = true;
+         	gp.levelHandler.nextLevel(); // Chuyển map
+         } else if (gp.ui.score<12) {
          	gp.gameState = gp.dialogueState;
          	gp.ui.currentDialogue ="You need to have 12 points";
+         	gp.levelHandler.againLevel(1);
          }
+		
 	}
 	
 	

@@ -6,6 +6,8 @@ public enum ObjectId {
 	Block,
 	Pipe,
 	Goombas,
-	StaticBlock;
+	StaticBlock,
+	Nigga,
+	BossNigga;
 
 }
