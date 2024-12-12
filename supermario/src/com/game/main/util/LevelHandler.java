@@ -68,7 +68,7 @@ public class LevelHandler {
 				//Block // ae lưu ý index sẽ là thứ tự của tile trong ảnh. ở đây ta có 4 thể loại tile là tile_1
 	            // tile_2,3,4. ví dụ tile 4 index 4 sẽ là ô thứ 4 trong ảnh và nó màu xám =)))
 	            if (red==0 && green==0 && blue==0) {
-	                handler.addObj(new Block(i*16 ,j*16 ,16 ,16 ,0 ,3, false )); // số thứ 2 từ phải sang là index
+	                handler.addObj(new Block(i*16 ,j*16 ,16 ,16 ,0 ,3, false )); // số thứ 3 từ phải sang là index
 	            } 
 	            
 	            if (red==255 && green==0 && blue==0) {
@@ -163,10 +163,13 @@ public class LevelHandler {
 	 public void againLevel(int i) {
 		    if (i==1) {
 		    	gp.ui.health = gp.ui.firstRoundHealth;
+		    	gp.handler.getPlayer().setX(100);
+		    	gp.handler.getPlayer().setY(300);
 		    } else if (i==2) {
 		    	gp.ui.health = gp.ui.secondRoundHealth;
+		    	gp.handler.getPlayer().setX(100);
+		    	gp.handler.getPlayer().setY(300);
 		    }
-	        handler.clearAllObjects(); // Xóa tất cả các object hiện tại
-	        loadLevel(i); // Tải lại map hiện tại
+		    
 	    }
 }

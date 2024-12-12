@@ -118,17 +118,6 @@ public class Nigga extends GameObject {
 		}
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 
 	@Override
 	public void render(Graphics g) {
@@ -137,26 +126,6 @@ public class Nigga extends GameObject {
 		
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 	@Override
 	public Rectangle getBounds() {
