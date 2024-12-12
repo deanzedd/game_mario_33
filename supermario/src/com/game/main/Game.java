@@ -52,7 +52,8 @@ public class Game extends Canvas implements Runnable {
     public final int pauseState = 2;
     public final int dialogueState =3;
     public final int winningState =4;
-    public final int gameOverState =5;
+    public final int fightingBossState =5;
+    public final int gameOverState =6;
     //UI
     public UI ui = new UI(this);
     private Image background;
@@ -200,6 +201,9 @@ public class Game extends Canvas implements Runnable {
     public void playSE(int i) {
     	sound.setFile(i);
     	sound.play();
+    }
+    public boolean isPlayingSound () {
+    	return sound.isPlaying();
     }
     public static int getWindowHeight() {
         return WINDOW_HEIGHT;

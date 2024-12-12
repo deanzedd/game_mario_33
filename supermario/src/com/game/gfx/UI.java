@@ -15,12 +15,14 @@ public class UI {
 	Game gp;
     Font arial_40, arial_80;
     Graphics2D g2;
-    private Image titleImage, titleImage2, titleImage3, healthImage;
+    private Image titleImage, titleImage2, titleImage3, healthImage, bossHealthImage;
     public int commandNum = 0;
     public int titleScreenState = 0; // 0 = the first screen, 1 = the second screen
     public double playTime;
     public int score=0; // Thêm biến lưu trữ điểm
     public int health =3;
+    public int bossHealth = 10;
+    public final int defaultBossHealth = 10;
     public int firstRoundHealth =3;
     public int secondRoundHealth = 5;
     DecimalFormat dFormat = new DecimalFormat("#0.00");
@@ -36,7 +38,8 @@ public class UI {
             titleImage = new javax.swing.ImageIcon(getClass().getResource("/titlescreen/newPlayer_1.png")).getImage();
             titleImage2 = new javax.swing.ImageIcon(getClass().getResource("/titlescreen/backgroundTitle.png")).getImage();
             titleImage3 = new javax.swing.ImageIcon(getClass().getResource("/titlescreen/MAMILO_ADVENTURE_2.png")).getImage();
-            healthImage = new javax.swing.ImageIcon(getClass().getResource("/UI/HEART.png")).getImage();
+            healthImage = new javax.swing.ImageIcon(getClass().getResource("/UI/heart.png")).getImage();
+            bossHealthImage = new javax.swing.ImageIcon(getClass().getResource("/UI/bossHeart.png")).getImage();
         } catch (NullPointerException e) {
             System.err.println("Main character image not found!");
         }
@@ -69,6 +72,10 @@ public class UI {
             drawTime();
             drawHealth (g2);
             drawScore ();
+            if (gp.levelHandler.currentLevel == 2) {
+            	drawBossHealth (g2);
+            	
+            }
         }
 
         // PLAY STATE
@@ -79,6 +86,7 @@ public class UI {
             drawTime();
             drawHealth (g2);
             drawScore ();
+            if (gp.levelHandler.currentLevel == 2) {drawBossHealth (g2);}
         }
         // GAME OVER STATE
         if (gp.gameState == gp.gameOverState) {
@@ -86,6 +94,8 @@ public class UI {
         	drawGameOverScreen ();
         	drawScore ();
         	drawTime();
+        	drawHealth (g2);
+        	if (gp.levelHandler.currentLevel == 2) { drawBossHealth (g2);}
         }
         // DIALOGUE STATE
         if (gp.gameState == gp.dialogueState) {
@@ -93,6 +103,14 @@ public class UI {
         	g2.setFont(arial_40);
         	drawDialogueScreen();
         }
+        
+        
+        //WINNING STATE 
+        if (gp.gameState == gp.winningState) {
+        	
+        }
+        
+        
     }
     public void drawDialogueScreen() {
     	
@@ -126,6 +144,13 @@ public class UI {
 		g2.drawImage(healthImage, gp.SCREEN_OFFSET, gp.SCREEN_OFFSET + 8, gp.SCREEN_OFFSET, gp.SCREEN_OFFSET, null);
 
 		g2.drawString("X " + health, gp.SCREEN_OFFSET * 2, gp.SCREEN_OFFSET * 2);
+    
+	}
+	public void drawBossHealth(Graphics2D g2) {
+		g2.setFont(arial_40);
+		g2.drawImage(bossHealthImage, gp.getScreenWidth() - gp.SCREEN_OFFSET * 4, gp.SCREEN_OFFSET + 8, gp.SCREEN_OFFSET, gp.SCREEN_OFFSET, null);
+
+		g2.drawString("X " + bossHealth, gp.getScreenWidth() - gp.SCREEN_OFFSET * 3, gp.SCREEN_OFFSET*2);
     
 	}
 
