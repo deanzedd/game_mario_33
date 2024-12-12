@@ -23,7 +23,7 @@ public class LevelHandler {
 	private Handler handler;
     public UI ui;
 	public Game gp;
-	private int currentLevel = 1; // Theo dõi map hiện tại
+	public int currentLevel = 2; // Theo dõi map hiện tại
 
 	public LevelHandler (Handler handler,UI ui, Game gp) {
 		this.handler = handler;
@@ -34,7 +34,7 @@ public class LevelHandler {
 	}
 	public void start() {
 
-		loadLevel(1);
+		loadLevel(currentLevel);
 	}
 
 	public void loadLevel(int level) {
@@ -158,7 +158,9 @@ public class LevelHandler {
 		    gp.ui.health = gp.ui.secondRoundHealth;
 	        currentLevel++;
 	        handler.clearAllObjects(); // Xóa tất cả các object hiện tại
-	        loadLevel(currentLevel); // Tải map tiếp theo
+	        loadLevel(currentLevel); 
+	        gp.stopMusic();
+	        gp.playMusic(6);// Tải map tiếp theo
 	    }
 	 public void againLevel(int i) {
 		    if (i==1) {
@@ -167,6 +169,7 @@ public class LevelHandler {
 		    	gp.handler.getPlayer().setY(300);
 		    } else if (i==2) {
 		    	gp.ui.health = gp.ui.secondRoundHealth;
+		    	gp.ui.bossHealth = gp.ui.defaultBossHealth;
 		    	gp.handler.getPlayer().setX(100);
 		    	gp.handler.getPlayer().setY(300);
 		    }
