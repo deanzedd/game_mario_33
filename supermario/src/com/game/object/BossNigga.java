@@ -22,7 +22,7 @@ public class BossNigga extends GameObject {
 	
 	private PlayerState state;
 	private BufferedImage[] spriteL,spriteS;
-	private Animation goombasWalkL, goombasWalkS;	// Hieu ung goombasWalkLarge, goombasWalkSmall
+	private Animation goombasWalkL, playerWalkS;	// Hieu ung goombasWalkLarge, goombasWalkSmall
 	private BufferedImage[] currSprite;
 	private Animation currAnimation;
 	
@@ -37,13 +37,13 @@ public class BossNigga extends GameObject {
 		spriteS = tex.getBossNiggaS();
 		
 		//goombasWalkL = new Animation(5, spriteL[1], spriteL[2], spriteL[3]);	// Lay animation nhan vat voi 3 hinh SpriteLarge dau tien
-		//goombasWalkS = new Animation(0, spriteS[1], spriteS[2], spriteS[3]);	
+		playerWalkS = new Animation(5, spriteS[9], spriteS[10], spriteS[11]);
 		
 		state = PlayerState.Small;
 		currSprite = spriteS;
 		
 
-		currAnimation = goombasWalkS;
+		currAnimation = playerWalkS;
 		
 		setVelX(-2);
 		
@@ -60,7 +60,7 @@ public class BossNigga extends GameObject {
 		
 		collision(); // update va cham
 		
-		//currAnimation.runAnimation();
+		currAnimation.runAnimation();
 		
 		
 	}
@@ -72,6 +72,15 @@ public class BossNigga extends GameObject {
 			if (temp == this) continue; // neu object dang thuc hien va cham thi khong lam gi ca
 			if(temp.getId()==ObjectId.Nigga || temp.getId()==ObjectId.Goombas) continue;
 			
+			//cho boss duoi theo minh
+			if(temp.getId()==ObjectId.Player ) {
+				if((temp.getX() > this.getX() +5)&&(temp.getX() < this.getX() +15) ) {
+					setVelX(2);
+				}
+				if((temp.getX() < this.getX() -5)&&(temp.getX() > this.getX() -15) ) {
+					setVelX(-2);
+				}
+			}
 			
 			
 			if (temp.getId() == ObjectId.Block && getBoundsTop().intersects(temp.getBounds())) {

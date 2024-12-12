@@ -72,7 +72,7 @@ public class Nigga extends GameObject {
 		for(int i = 0; i< handler.getGameObjs().size(); i++) {
 			GameObject temp = handler.getGameObjs().get(i);
 			if (temp == this) continue; // neu object dang thuc hien va cham thi khong lam gi ca
-			if(temp.getId()==ObjectId.Nigga || temp.getId()==ObjectId.Goombas) continue;
+			if(temp.getId()==ObjectId.Nigga || temp.getId()==ObjectId.Goombas||temp.getId()==ObjectId.BossNigga ) continue;
 			
 			
 			
