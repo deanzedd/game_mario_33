@@ -14,8 +14,8 @@ import com.game.object.util.Handler;
 import com.game.object.util.ObjectId;
 
 public class BossNigga extends GameObject {
-	private static final float WIDTH = 34;
-	private static final float HEIGHT = 34;
+	private static final float WIDTH = 50;//34
+	private static final float HEIGHT = 50;
 	private Handler handler;
 	private Texture tex;
 	

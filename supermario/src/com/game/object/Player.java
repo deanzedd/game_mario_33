@@ -308,7 +308,7 @@ public class Player extends GameObject {
          	gp.levelHandler.nextLevel(); // Chuyển map
          } else if (gp.ui.score<12) {
          	gp.gameState = gp.dialogueState;
-         	gp.ui.currentDialogue ="You need to have 12 points";
+         	gp.ui.currentDialogue ="You need to have 12 keys";//gp.ui.currentDialogue ="You need to have 12 points";
          	gp.levelHandler.againLevel(1);
          }
 		

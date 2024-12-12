@@ -21,8 +21,8 @@ public class UI {
     public double playTime;
     public int score=0; // Thêm biến lưu trữ điểm
     public int health=5;
-    public int bossHealth = 20;
-    public final int defaultBossHealth = 20;
+    public int bossHealth = 3;
+    public final int defaultBossHealth = 3;//20
     public int firstRoundHealth =5;
     public int secondRoundHealth = 5;
     DecimalFormat dFormat = new DecimalFormat("#0.00");
@@ -114,7 +114,7 @@ public class UI {
         	g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
         	g2.drawImage(victoryImage, -gp.SCREEN_OFFSET*2, 0, gp.getWidth()+48*4, gp.getHeight(),null);
         	g2.setFont(arial_40);
-    		g2.drawString("Your Score: " + score , 18, gp.SCREEN_OFFSET); 
+    		g2.drawString("Your Score: " + score , 18, gp.SCREEN_OFFSET); //g2.drawString("Your Score: " + score , 18, gp.SCREEN_OFFSET);
     		g2.drawString("Your Time: " + dFormat.format(playTime), gp.getScreenWidth() - gp.SCREEN_OFFSET * 6, gp.SCREEN_OFFSET);
         	return;
         }
@@ -165,7 +165,7 @@ public class UI {
 
 	public void drawScore () {
 		g2.setFont(arial_40);
-		g2.drawString("Score: " + score , gp.SCREEN_OFFSET, gp.SCREEN_OFFSET); 
+		g2.drawString("Key: " + score , gp.SCREEN_OFFSET, gp.SCREEN_OFFSET); //g2.drawString("Score: " + score , gp.SCREEN_OFFSET, gp.SCREEN_OFFSET); 
 	}
 	public void drawTime() {
 		g2.setFont(arial_40);
