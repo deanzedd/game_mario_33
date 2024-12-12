@@ -15,15 +15,15 @@ public class UI {
 	Game gp;
     Font arial_40, arial_80;
     Graphics2D g2;
-    private Image titleImage, titleImage2, titleImage3, healthImage, bossHealthImage;
+    private Image titleImage, titleImage2, titleImage3, healthImage, bossHealthImage, victoryImage;
     public int commandNum = 0;
     public int titleScreenState = 0; // 0 = the first screen, 1 = the second screen
     public double playTime;
     public int score=0; // Thêm biến lưu trữ điểm
-    public int health =3;
-    public int bossHealth = 10;
-    public final int defaultBossHealth = 10;
-    public int firstRoundHealth =3;
+    public int health=5;
+    public int bossHealth = 20;
+    public final int defaultBossHealth = 20;
+    public int firstRoundHealth =5;
     public int secondRoundHealth = 5;
     DecimalFormat dFormat = new DecimalFormat("#0.00");
     public String currentDialogue = "";
@@ -40,6 +40,7 @@ public class UI {
             titleImage3 = new javax.swing.ImageIcon(getClass().getResource("/titlescreen/MAMILO_ADVENTURE_2.png")).getImage();
             healthImage = new javax.swing.ImageIcon(getClass().getResource("/UI/heart.png")).getImage();
             bossHealthImage = new javax.swing.ImageIcon(getClass().getResource("/UI/bossHeart.png")).getImage();
+            victoryImage = new javax.swing.ImageIcon(getClass().getResource("/UI/victoryScreen.png")).getImage();
         } catch (NullPointerException e) {
             System.err.println("Main character image not found!");
         }
@@ -51,7 +52,9 @@ public class UI {
     public void updateHealth(int damage) {
         health -= damage; // Cộng điểm
     }
-
+    public void updateSound() {
+    	
+    }
     public void draw(Graphics2D g2) {
         this.g2 = g2;
 
@@ -108,6 +111,12 @@ public class UI {
         //WINNING STATE 
         if (gp.gameState == gp.winningState) {
         	
+        	g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+        	g2.drawImage(victoryImage, -gp.SCREEN_OFFSET*2, 0, gp.getWidth()+48*4, gp.getHeight(),null);
+        	g2.setFont(arial_40);
+    		g2.drawString("Your Score: " + score , 18, gp.SCREEN_OFFSET); 
+    		g2.drawString("Your Time: " + dFormat.format(playTime), gp.getScreenWidth() - gp.SCREEN_OFFSET * 6, gp.SCREEN_OFFSET);
+        	return;
         }
         
         
@@ -242,12 +251,12 @@ public class UI {
 			g2.setColor (Color.white);
 			g2.setFont(g2.getFont().deriveFont(42F));
 			
-			String text = "Select your class";
+			String text = "Select your gender";
 			int x = getXforCenteredText (text);
 			int y = gp.SCREEN_OFFSET*5;
 			g2.drawString (text, x, y);
 			
-			text ="Mario Normal";
+			text ="MALE MAMILO";
 			x = getXforCenteredText (text);
 			y += gp.SCREEN_OFFSET*3;
 			g2.drawString (text, x, y);
@@ -255,7 +264,7 @@ public class UI {
 				g2.drawString(">",x-gp.SCREEN_OFFSET, y);
 			}
 			
-			text ="Mario Black";
+			text ="FEMALE MAMILO";
 			x = getXforCenteredText (text);
 			y += gp.SCREEN_OFFSET;
 			g2.drawString (text, x, y);
@@ -263,7 +272,7 @@ public class UI {
 				g2.drawString(">",x-gp.SCREEN_OFFSET, y);
 			}
 			
-			text ="Mario White";
+			text ="UNDEFINED MAMILO";
 			x = getXforCenteredText (text);
 			y += gp.SCREEN_OFFSET;
 			g2.drawString (text, x, y);

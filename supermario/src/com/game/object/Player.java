@@ -155,7 +155,7 @@ public class Player extends GameObject {
 	                if (block.getIndex() == 24) {
 	                	removeBlocks.add(block);
 	                	gp.playSE(4);
-
+	                	
 	                   block.hit();
 	                   gp.ui.updateScore(1);
 	                     //  gp.gameState= gp.pauseState; // for testing    
@@ -227,18 +227,21 @@ public class Player extends GameObject {
 	            if (getBounds().intersects(temp.getBoundsTop())) {
 	            	setVelY(0);
 	                handler.removeObj(temp);
+	                gp.playSE(9);
 	                return;
 	            }
 	            if (getBoundsLeft().intersects(temp.getBoundsRight()))  {
 	            	setVelY(-15);
 	            	setVelX(5);
 	            	getDamagefromMonster ();
+	            	gp.playSE(8);
 	                return;
 	            }
 	            if (getBoundsRight().intersects(temp.getBoundsLeft()))  {
 	            	setVelY(-15);
 	            	setVelX(-5);
 	            	getDamagefromMonster ();
+	            	gp.playSE(8);
 	                return;
 	            }
 	        }
@@ -246,24 +249,29 @@ public class Player extends GameObject {
 	        //BOSS
 	        if (temp.getId() == ObjectId.BossNigga) {
 	        	if (getBounds().intersects(temp.getBoundsTop())) {
+	        		gp.playSE(9);
 	            	setVelY(-20);
+	            	setVelX(-20);
 	            	gp.ui.bossHealth--;
-	            	if (gp.ui.bossHealth<0) {
-	            		handler.removeObj(temp); 
+	            	if (gp.ui.bossHealth<=0) {
+	            		
 	            		gp.gameState=gp.winningState;
+	            		gp.stopMusic();
 	            		gp.playSE(7);
 	            	} 
 	                return;
 	            }
 	            if (getBoundsLeft().intersects(temp.getBoundsRight()))  {
 	            	setVelY(-15);
-	            	setVelX(5);
+	            	setVelX(10);
+	            	gp.playSE(8);
 	            	getDamagefromMonster ();
 	                return;
 	            }
 	            if (getBoundsRight().intersects(temp.getBoundsLeft()))  {
 	            	setVelY(-15);
-	            	setVelX(-5);
+	            	setVelX(-10);
+	            	gp.playSE(8);
 	            	getDamagefromMonster ();
 	                return;
 	            }
@@ -284,11 +292,8 @@ public class Player extends GameObject {
              	
 
                  gp.gameState = gp.gameOverState;
-                 if (gp.levelHandler.currentLevel == 1) {
-                	 gp.levelHandler.againLevel(1);
-                 } else {
-                	 gp.levelHandler.againLevel(2);
-                 }
+                	 gp.levelHandler.againLevel(gp.levelHandler.currentLevel);
+                 
                  
              }
              damageCooldown = 60; // Thời gian chờ (60 khung hình ~ 1 giây nếu FPS = 60)

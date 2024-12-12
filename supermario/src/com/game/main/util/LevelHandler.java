@@ -23,7 +23,7 @@ public class LevelHandler {
 	private Handler handler;
     public UI ui;
 	public Game gp;
-	public int currentLevel = 2; // Theo dõi map hiện tại
+	public int currentLevel = 1; // Theo dõi map hiện tại
 
 	public LevelHandler (Handler handler,UI ui, Game gp) {
 		this.handler = handler;
@@ -159,8 +159,6 @@ public class LevelHandler {
 	        currentLevel++;
 	        handler.clearAllObjects(); // Xóa tất cả các object hiện tại
 	        loadLevel(currentLevel); 
-	        gp.stopMusic();
-	        gp.playMusic(6);// Tải map tiếp theo
 	    }
 	 public void againLevel(int i) {
 		    if (i==1) {

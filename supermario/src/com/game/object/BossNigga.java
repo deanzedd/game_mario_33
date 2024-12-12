@@ -14,8 +14,8 @@ import com.game.object.util.Handler;
 import com.game.object.util.ObjectId;
 
 public class BossNigga extends GameObject {
-	private static final float WIDTH = 64;
-	private static final float HEIGHT = 64;
+	private static final float WIDTH = 34;
+	private static final float HEIGHT = 34;
 	private Handler handler;
 	private Texture tex;
 	
@@ -45,7 +45,7 @@ public class BossNigga extends GameObject {
 
 		currAnimation = playerWalkS;
 		
-		setVelX(-3);
+		setVelX(-5);
 		
 	}
 
@@ -74,10 +74,10 @@ public class BossNigga extends GameObject {
 			
 			//cho boss duoi theo minh
 			if(temp.getId()==ObjectId.Player ) {
-				if (temp.getX() > this.getX() + 600) {
-	                setVelX(5);
-	            } else if (temp.getX() < this.getX() - 600) {
-	                setVelX(-5);
+				if (temp.getX() > this.getX() + 700) {
+	                setVelX(7);
+	            } else if (temp.getX() < this.getX() - 700) {
+	                setVelX(-7);
 	            }
 			}
 			
@@ -85,7 +85,8 @@ public class BossNigga extends GameObject {
 			if (temp.getId() == ObjectId.Block && getBoundsTop().intersects(temp.getBounds())) {
 				setY(temp.getY() + temp.getHeight());
 				setVelY(0);
-				
+				//((Block) temp).hit();
+				//removeBlocks.add((Block) temp);
 			} else {	
 				// xét xem có bị chạm dưới hay không
 				if(getBounds().intersects(temp.getBounds())) {
@@ -103,14 +104,14 @@ public class BossNigga extends GameObject {
 				//xét xem có bị chạm phải hay không
 				if (getBoundsRight().intersects(temp.getBounds())) {
 					setX(temp.getX() - getWidth());
-					setVelX(-3);
+					setVelX(-2);
 				}
 				
 				
 				//xét xem có bị chạm trái hay không
 				if (getBoundsLeft().intersects(temp.getBounds())) {
 					setX(temp.getX() + getWidth());
-					setVelX(3);
+					setVelX(2);
 				}
 				
 			}
