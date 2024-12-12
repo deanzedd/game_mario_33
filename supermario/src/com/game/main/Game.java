@@ -40,7 +40,7 @@ public class Game extends Canvas implements Runnable {
 
     // Game components
     private Thread thread;
-    private Handler handler;
+    public Handler handler;
     private Camera cam;
     private static Texture tex;
     public LevelHandler levelHandler;
@@ -52,13 +52,14 @@ public class Game extends Canvas implements Runnable {
     public final int pauseState = 2;
     public final int dialogueState =3;
     public final int winningState =4;
-    public final int gameOverState =5;
+    public final int fightingBossState =5;
+    public final int gameOverState =6;
     //UI
     public UI ui = new UI(this);
     private Image background;
     
     //SOUND
-    Sound sound = new Sound();
+    public Sound sound = new Sound();
     
     //PLAYER
     Player player;
@@ -69,8 +70,8 @@ public class Game extends Canvas implements Runnable {
     }
     public void initialize() {
         gameState = titleState;
-        
         playMusic(0);
+        //playMusic(0);
     	try {
             ImageIcon icon = new ImageIcon(getClass().getResource("/tile/BACK3.png"));
             background = icon.getImage();
@@ -142,7 +143,7 @@ public class Game extends Canvas implements Runnable {
             
             if (System.currentTimeMillis() - timer > MILLIS_PER_SEC) {
                 timer += MILLIS_PER_SEC;
-                System.out.println("FPS: " + frames + " TPS: " + updates);
+                //System.out.println("FPS: " + frames + " TPS: " + updates);
                 updates = 0;
                 frames = 0;
             }
@@ -155,10 +156,6 @@ public class Game extends Canvas implements Runnable {
         if (gameState == playState) {
             handler.tick();  //UPDATE
             cam.tick(handler.getPlayer());
-        }
-        if (gameState == gameOverState) {
-        	stopMusic();
-    		playSE(3);
         }
     	
     }
@@ -194,16 +191,22 @@ public class Game extends Canvas implements Runnable {
     }
     
     public void playMusic(int i) {
-    	sound.setFile(i);
+    	sound.setFileforMusic(i);
+    	System.out.println("Is playing music "+i);
     	sound.play();
     	sound.loop();
     }
-    public void stopMusic() {
+    public synchronized void  stopMusic() {
     	sound.stop();
+    	System.out.println("STOP MUSIC");
     }
     public void playSE(int i) {
-    	sound.setFile(i);
+    	System.out.println("Is playing SE "+i);
+    	sound.setFileforSE(i);
     	sound.play();
+    }
+    public boolean isPlayingSound () {
+    	return sound.isPlaying();
     }
     public static int getWindowHeight() {
         return WINDOW_HEIGHT;

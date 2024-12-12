@@ -78,7 +78,7 @@ public class Goombas extends GameObject {
 			if (temp.getId() == ObjectId.Block && getBoundsTop().intersects(temp.getBounds())) {
 				setY(temp.getY() + temp.getHeight());
 				setVelY(0);
-				((Block) temp).hit();
+				//((Block) temp).hit();
 				//removeBlocks.add((Block) temp);
 			} else {	
 				// xét xem có bị chạm dưới hay không
@@ -117,17 +117,6 @@ public class Goombas extends GameObject {
 		}
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 
 	@Override
 	public void render(Graphics g) {
@@ -137,26 +126,6 @@ public class Goombas extends GameObject {
 	}
 
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 	@Override
 	public Rectangle getBounds() {
 		// TODO Auto-generated method stub

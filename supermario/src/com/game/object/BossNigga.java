@@ -14,15 +14,15 @@ import com.game.object.util.Handler;
 import com.game.object.util.ObjectId;
 
 public class BossNigga extends GameObject {
-	private static final float WIDTH = 32;
-	private static final float HEIGHT = 32;
+	private static final float WIDTH = 50;//34
+	private static final float HEIGHT = 50;
 	private Handler handler;
 	private Texture tex;
 	
 	
 	private PlayerState state;
 	private BufferedImage[] spriteL,spriteS;
-	private Animation goombasWalkL, goombasWalkS;	// Hieu ung goombasWalkLarge, goombasWalkSmall
+	private Animation goombasWalkL, playerWalkS;	// Hieu ung goombasWalkLarge, goombasWalkSmall
 	private BufferedImage[] currSprite;
 	private Animation currAnimation;
 	
@@ -37,15 +37,15 @@ public class BossNigga extends GameObject {
 		spriteS = tex.getBossNiggaS();
 		
 		//goombasWalkL = new Animation(5, spriteL[1], spriteL[2], spriteL[3]);	// Lay animation nhan vat voi 3 hinh SpriteLarge dau tien
-		//goombasWalkS = new Animation(0, spriteS[1], spriteS[2], spriteS[3]);	
+		playerWalkS = new Animation(5, spriteS[9], spriteS[10], spriteS[11]);
 		
 		state = PlayerState.Small;
 		currSprite = spriteS;
 		
 
-		currAnimation = goombasWalkS;
+		currAnimation = playerWalkS;
 		
-		setVelX(-2);
+		setVelX(-5);
 		
 	}
 
@@ -60,7 +60,7 @@ public class BossNigga extends GameObject {
 		
 		collision(); // update va cham
 		
-		//currAnimation.runAnimation();
+		currAnimation.runAnimation();
 		
 		
 	}
@@ -72,12 +72,20 @@ public class BossNigga extends GameObject {
 			if (temp == this) continue; // neu object dang thuc hien va cham thi khong lam gi ca
 			if(temp.getId()==ObjectId.Nigga || temp.getId()==ObjectId.Goombas) continue;
 			
+			//cho boss duoi theo minh
+			if(temp.getId()==ObjectId.Player ) {
+				if (temp.getX() > this.getX() + 700) {
+	                setVelX(7);
+	            } else if (temp.getX() < this.getX() - 700) {
+	                setVelX(-7);
+	            }
+			}
 			
 			
 			if (temp.getId() == ObjectId.Block && getBoundsTop().intersects(temp.getBounds())) {
 				setY(temp.getY() + temp.getHeight());
 				setVelY(0);
-				((Block) temp).hit();
+				//((Block) temp).hit();
 				//removeBlocks.add((Block) temp);
 			} else {	
 				// xét xem có bị chạm dưới hay không
@@ -116,17 +124,6 @@ public class BossNigga extends GameObject {
 		}
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 
 	@Override
 	public void render(Graphics g) {
@@ -140,27 +137,6 @@ public class BossNigga extends GameObject {
 	    }
 		
 	}
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 	@Override
 	public Rectangle getBounds() {

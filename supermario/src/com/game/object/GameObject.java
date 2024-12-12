@@ -11,7 +11,7 @@ public abstract class GameObject {
 	private ObjectId id;
 	private float velX, velY;
 	private float width, height;
-	private int scale;
+	public int scale;
 	public String dialogues[] = new String[20];
 	
 	public GameObject(float x, float y, ObjectId id, float width, float height, int scale) {

@@ -1,5 +1,6 @@
 package com.game.gfx;
 
+import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
@@ -14,13 +15,15 @@ public class UI {
 	Game gp;
     Font arial_40, arial_80;
     Graphics2D g2;
-    private Image titleImage, titleImage2, titleImage3, healthImage;
+    private Image titleImage, titleImage2, titleImage3, healthImage, bossHealthImage, victoryImage;
     public int commandNum = 0;
     public int titleScreenState = 0; // 0 = the first screen, 1 = the second screen
     public double playTime;
-    public int score; // Thêm biến lưu trữ điểm
-    public int health =3;
-    public int firstRoundHealth =3;
+    public int score=0; // Thêm biến lưu trữ điểm
+    public int health=5;
+    public int bossHealth = 3;
+    public final int defaultBossHealth = 3;//20
+    public int firstRoundHealth =5;
     public int secondRoundHealth = 5;
     DecimalFormat dFormat = new DecimalFormat("#0.00");
     public String currentDialogue = "";
@@ -35,7 +38,9 @@ public class UI {
             titleImage = new javax.swing.ImageIcon(getClass().getResource("/titlescreen/newPlayer_1.png")).getImage();
             titleImage2 = new javax.swing.ImageIcon(getClass().getResource("/titlescreen/backgroundTitle.png")).getImage();
             titleImage3 = new javax.swing.ImageIcon(getClass().getResource("/titlescreen/MAMILO_ADVENTURE_2.png")).getImage();
-            healthImage = new javax.swing.ImageIcon(getClass().getResource("/UI/HEART.png")).getImage();
+            healthImage = new javax.swing.ImageIcon(getClass().getResource("/UI/heart.png")).getImage();
+            bossHealthImage = new javax.swing.ImageIcon(getClass().getResource("/UI/bossHeart.png")).getImage();
+            victoryImage = new javax.swing.ImageIcon(getClass().getResource("/UI/victoryScreen.png")).getImage();
         } catch (NullPointerException e) {
             System.err.println("Main character image not found!");
         }
@@ -47,7 +52,9 @@ public class UI {
     public void updateHealth(int damage) {
         health -= damage; // Cộng điểm
     }
-
+    public void updateSound() {
+    	
+    }
     public void draw(Graphics2D g2) {
         this.g2 = g2;
 
@@ -61,37 +68,58 @@ public class UI {
 
         // PAUSE STATE
         if (gp.gameState == gp.pauseState) {
+        	g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
             drawPauseScreen();
             g2.setFont(arial_40);
-            g2.drawString("Time: " + dFormat.format(playTime), gp.getScreenWidth() - gp.SCREEN_OFFSET * 4, gp.SCREEN_OFFSET);
-
+           
+            drawTime();
             drawHealth (g2);
             drawScore ();
+            if (gp.levelHandler.currentLevel == 2) {
+            	drawBossHealth (g2);
+            	
+            }
         }
 
         // PLAY STATE
         if (gp.gameState == gp.playState) {
+        	g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
             g2.setFont(arial_40);
             playTime += (double) 1 / 180;
-            g2.drawString("Time: " + dFormat.format(playTime), gp.getScreenWidth() - gp.SCREEN_OFFSET * 4, gp.SCREEN_OFFSET);
+            drawTime();
             drawHealth (g2);
             drawScore ();
+            if (gp.levelHandler.currentLevel == 2) {drawBossHealth (g2);}
         }
         // GAME OVER STATE
         if (gp.gameState == gp.gameOverState) {
-        	g2.setFont(arial_40);
-            g2.drawString("Time: " + dFormat.format(playTime), gp.getScreenWidth() - gp.SCREEN_OFFSET * 4, gp.SCREEN_OFFSET);
-
+        	g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
         	drawGameOverScreen ();
         	drawScore ();
+        	drawTime();
+        	drawHealth (g2);
+        	if (gp.levelHandler.currentLevel == 2) { drawBossHealth (g2);}
         }
         // DIALOGUE STATE
         if (gp.gameState == gp.dialogueState) {
+        	g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
         	g2.setFont(arial_40);
-            g2.drawString("Time: " + dFormat.format(playTime), gp.getScreenWidth() - gp.SCREEN_OFFSET * 4, gp.SCREEN_OFFSET);
-
         	drawDialogueScreen();
         }
+        
+        
+        //WINNING STATE 
+        if (gp.gameState == gp.winningState) {
+        	
+        	g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+        	g2.drawImage(victoryImage, -gp.SCREEN_OFFSET*2, 0, gp.getWidth()+48*4, gp.getHeight(),null);
+        	g2.setFont(arial_40);
+    		g2.drawString("Your Score: " + score , 18, gp.SCREEN_OFFSET); //g2.drawString("Your Score: " + score , 18, gp.SCREEN_OFFSET);
+    		g2.drawString("Your Time: " + dFormat.format(playTime), gp.getScreenWidth() - gp.SCREEN_OFFSET * 6, gp.SCREEN_OFFSET);
+        	return;
+        }
+        
+        
     }
     public void drawDialogueScreen() {
     	
@@ -121,16 +149,28 @@ public class UI {
     }
     
 	public void drawHealth(Graphics2D g2) {
+		g2.setFont(arial_40);
 		g2.drawImage(healthImage, gp.SCREEN_OFFSET, gp.SCREEN_OFFSET + 8, gp.SCREEN_OFFSET, gp.SCREEN_OFFSET, null);
 
 		g2.drawString("X " + health, gp.SCREEN_OFFSET * 2, gp.SCREEN_OFFSET * 2);
     
 	}
+	public void drawBossHealth(Graphics2D g2) {
+		g2.setFont(arial_40);
+		g2.drawImage(bossHealthImage, gp.getScreenWidth() - gp.SCREEN_OFFSET * 4, gp.SCREEN_OFFSET + 8, gp.SCREEN_OFFSET, gp.SCREEN_OFFSET, null);
+
+		g2.drawString("X " + bossHealth, gp.getScreenWidth() - gp.SCREEN_OFFSET * 3, gp.SCREEN_OFFSET*2);
+    
+	}
 
 	public void drawScore () {
-		g2.drawString("Score: " + score , gp.SCREEN_OFFSET, gp.SCREEN_OFFSET); 
+		g2.setFont(arial_40);
+		g2.drawString("Key: " + score , gp.SCREEN_OFFSET, gp.SCREEN_OFFSET); //g2.drawString("Score: " + score , gp.SCREEN_OFFSET, gp.SCREEN_OFFSET); 
 	}
-	
+	public void drawTime() {
+		g2.setFont(arial_40);
+		 g2.drawString("Time: " + dFormat.format(playTime), gp.getScreenWidth() - gp.SCREEN_OFFSET * 4, gp.SCREEN_OFFSET);
+	}
 	public void drawPauseScreen() {
 		
 		String text = "PAUSED";
@@ -211,12 +251,12 @@ public class UI {
 			g2.setColor (Color.white);
 			g2.setFont(g2.getFont().deriveFont(42F));
 			
-			String text = "Select your class";
+			String text = "Select your gender";
 			int x = getXforCenteredText (text);
 			int y = gp.SCREEN_OFFSET*5;
 			g2.drawString (text, x, y);
 			
-			text ="Mario Normal";
+			text ="MALE MAMILO";
 			x = getXforCenteredText (text);
 			y += gp.SCREEN_OFFSET*3;
 			g2.drawString (text, x, y);
@@ -224,7 +264,7 @@ public class UI {
 				g2.drawString(">",x-gp.SCREEN_OFFSET, y);
 			}
 			
-			text ="Mario Black";
+			text ="FEMALE MAMILO";
 			x = getXforCenteredText (text);
 			y += gp.SCREEN_OFFSET;
 			g2.drawString (text, x, y);
@@ -232,7 +272,7 @@ public class UI {
 				g2.drawString(">",x-gp.SCREEN_OFFSET, y);
 			}
 			
-			text ="Mario White";
+			text ="UNDEFINED MAMILO";
 			x = getXforCenteredText (text);
 			y += gp.SCREEN_OFFSET;
 			g2.drawString (text, x, y);

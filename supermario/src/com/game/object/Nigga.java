@@ -15,8 +15,8 @@ import com.game.object.util.ObjectId;
 
 
 public class Nigga extends GameObject {
-	private static final float WIDTH = 16;
-	private static final float HEIGHT = 16;
+	private static final float WIDTH = 22;
+	private static final float HEIGHT = 22;
 	private Handler handler;
 	private Texture tex;
 	
@@ -72,14 +72,14 @@ public class Nigga extends GameObject {
 		for(int i = 0; i< handler.getGameObjs().size(); i++) {
 			GameObject temp = handler.getGameObjs().get(i);
 			if (temp == this) continue; // neu object dang thuc hien va cham thi khong lam gi ca
-			if(temp.getId()==ObjectId.Nigga || temp.getId()==ObjectId.Goombas) continue;
+			if(temp.getId()==ObjectId.Nigga || temp.getId()==ObjectId.Goombas||temp.getId()==ObjectId.BossNigga ) continue;
 			
 			
 			
 			if (temp.getId() == ObjectId.Block && getBoundsTop().intersects(temp.getBounds())) {
 				setY(temp.getY() + temp.getHeight());
 				setVelY(0);
-				((Block) temp).hit();
+				//((Block) temp).hit();
 				//removeBlocks.add((Block) temp);
 			} else {	
 				// xét xem có bị chạm dưới hay không
@@ -118,17 +118,6 @@ public class Nigga extends GameObject {
 		}
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 
 	@Override
 	public void render(Graphics g) {
@@ -137,26 +126,6 @@ public class Nigga extends GameObject {
 		
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 	@Override
 	public Rectangle getBounds() {

@@ -65,7 +65,10 @@ public class Block extends GameObject {
 	@Override
 	public Rectangle getBoundsTop() {
 		// TODO Auto-generated method stub
-		return null;
+		return new Rectangle( (int) (getX() ),
+				(int) getY(),
+				(int) getWidth(),
+				(int) getHeight()/2);
 	}
 
 	@Override

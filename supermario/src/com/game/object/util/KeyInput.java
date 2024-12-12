@@ -79,13 +79,11 @@ public class KeyInput extends KeyAdapter {
 						gp.gameState =gp.playState;
 						gp.stopMusic();
 						gp.playMusic(1);
-						
 					}
 					else if (gp.ui.commandNum == 2) {
 						gp.gameState =gp.playState;
 						gp.stopMusic();
 						gp.playMusic(1);
-						
 					}
 					else if (gp.ui.commandNum == 3) {
 						gp.ui.titleScreenState=0;
@@ -103,8 +101,9 @@ public class KeyInput extends KeyAdapter {
 		
 		if (gp.gameState == gp.gameOverState) {
 			if (key == KeyEvent.VK_ENTER) {
+				gp.playSE(3);
+				gp.levelHandler.againLevel(1);
 				gp.gameState= gp.playState;
-
 				
 			}
 		}
@@ -113,11 +112,13 @@ public class KeyInput extends KeyAdapter {
 
 	        if (key == KeyEvent.VK_ENTER) {
 
-	            // Ensure you are accessing the Player's winning state through handler
 	            Player player = handler.getPlayer();  // Get the current player
 
 	            if (gp.ui.score>=12) {
 	                gp.gameState = gp.playState;
+	                //gp.stopMusic();
+	                //gp.sound.clip.close();
+	                //gp.playMusic(2);
 	            } else {
 	                gp.gameState = gp.gameOverState;  // Game Over
 	            }
@@ -148,7 +149,7 @@ public class KeyInput extends KeyAdapter {
 				keyDown[0] = true;
 				handler.getPlayer().setJumped(true);
 				if (gp.gameState == gp.playState ) {
-					gp.playSE(2);
+					gp.playSE(6);
 				}
 			}
 		}

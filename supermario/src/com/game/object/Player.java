@@ -1,5 +1,6 @@
 package com.game.object;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -75,30 +76,62 @@ public class Player extends GameObject {
 	    }
 		currAnimation.runAnimation();
 		
+		if (getY()>1000) {
+			gp.gameState= gp.gameOverState;
+		}
+		
 		
 	}
 
 	@Override
 	public void render(Graphics g) {
-	    if (jumped) { 	// khi nhan vat nhay
-	    	if (forward) {	// kiem tra xem co phai nhay len khong
-	    		//g.drawImage(currSprite[5], (int) getX(), (int) getY(), (int) getWidth(), (int) getHeight(), null);
-	    		g.drawImage(currSprite[5], (int) (getX() + getWidth()), (int) getY(), (int) -getWidth(), (int) getHeight(), null);
-	    		
-	    	} else {
-	    		//g.drawImage(currSprite[5], (int) (getX() + getWidth()), (int) getY(), (int) -getWidth(), (int) getHeight(), null);
-	    		g.drawImage(currSprite[5], (int) getX(), (int) getY(), (int) getWidth(), (int) getHeight(), null);
-	    	} 
-	    } else if (getVelX() > 0) {	// khi di sang phai
-	    	currAnimation.drawAnimation(g, (int) getX(), (int) getY(), (int) getWidth(), (int) getHeight());
-	    	forward = true;
-	    } else if (getVelX() < 0) {	// khi di sang trai
-	    	currAnimation.drawAnimation(g, (int) (getX() + getWidth()), (int) getY(), (int) -getWidth(), (int) getHeight());
-	    	forward = false;
-	    } else {	// neu dung yen
-	    	g.drawImage(currSprite[0], (int) getX(), (int) getY(), (int) getWidth(), (int) getHeight(), null);
-	    }
-	    //showBounds(g);
+		Graphics2D g2 = (Graphics2D) g;
+		if (damageCooldown<=60&& damageCooldown >0) {
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+			 if (jumped) { 	// khi nhan vat nhay
+			    	if (forward) {	// kiem tra xem co phai nhay len khong
+			    		//g.drawImage(currSprite[5], (int) getX(), (int) getY(), (int) getWidth(), (int) getHeight(), null);
+			    		g2.drawImage(currSprite[5], (int) (getX() + getWidth()), (int) getY(), (int) -getWidth(), (int) getHeight(), null);
+			    		
+			    	} else {
+			    		//g.drawImage(currSprite[5], (int) (getX() + getWidth()), (int) getY(), (int) -getWidth(), (int) getHeight(), null);
+			    		g2.drawImage(currSprite[5], (int) getX(), (int) getY(), (int) getWidth(), (int) getHeight(), null);
+			    	} 
+			    } else if (getVelX() > 0) {	// khi di sang phai
+			    	currAnimation.drawAnimation(g, (int) getX(), (int) getY(), (int) getWidth(), (int) getHeight());
+			    	forward = true;
+			    } else if (getVelX() < 0) {	// khi di sang trai
+			    	currAnimation.drawAnimation(g, (int) (getX() + getWidth()), (int) getY(), (int) -getWidth(), (int) getHeight());
+			    	forward = false;
+			    } else {	// neu dung yen
+			    	g.drawImage(currSprite[0], (int) getX(), (int) getY(), (int) getWidth(), (int) getHeight(), null);
+			    }
+			    //showBounds(g);
+		} else {
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+			 if (jumped) { 	// khi nhan vat nhay
+			    	if (forward) {	// kiem tra xem co phai nhay len khong
+			    		//g.drawImage(currSprite[5], (int) getX(), (int) getY(), (int) getWidth(), (int) getHeight(), null);
+			    		g2.drawImage(currSprite[5], (int) (getX() + getWidth()), (int) getY(), (int) -getWidth(), (int) getHeight(), null);
+			    		
+			    	} else {
+			    		//g.drawImage(currSprite[5], (int) (getX() + getWidth()), (int) getY(), (int) -getWidth(), (int) getHeight(), null);
+			    		g2.drawImage(currSprite[5], (int) getX(), (int) getY(), (int) getWidth(), (int) getHeight(), null);
+			    	} 
+			    } else if (getVelX() > 0) {	// khi di sang phai
+			    	currAnimation.drawAnimation(g, (int) getX(), (int) getY(), (int) getWidth(), (int) getHeight());
+			    	forward = true;
+			    } else if (getVelX() < 0) {	// khi di sang trai
+			    	currAnimation.drawAnimation(g, (int) (getX() + getWidth()), (int) getY(), (int) -getWidth(), (int) getHeight());
+			    	forward = false;
+			    } else {	// neu dung yen
+			    	g.drawImage(currSprite[0], (int) getX(), (int) getY(), (int) getWidth(), (int) getHeight(), null);
+			    }
+			    //showBounds(g);
+			
+		}
+		
+	   
 	}
 	
 	private void collision() {
@@ -122,7 +155,7 @@ public class Player extends GameObject {
 	                if (block.getIndex() == 24) {
 	                	removeBlocks.add(block);
 	                	gp.playSE(4);
-
+	                	
 	                   block.hit();
 	                   gp.ui.updateScore(1);
 	                     //  gp.gameState= gp.pauseState; // for testing    
@@ -163,11 +196,7 @@ public class Player extends GameObject {
 	            // Bỏ qua Pipe có thể đi xuyên qua
 	            if (pipe.enterable) continue;
 
-	            // Kiểm tra va chạm từ trên
-	            if (getBoundsTop().intersects(pipe.getBounds())) {
-	                setY(pipe.getY() + pipe.getHeight());
-	                setVelY(0);
-	            }
+	            
 
 	            // Kiểm tra va chạm từ dưới
 	            if (getBounds().intersects(pipe.getBounds())) {
@@ -175,59 +204,101 @@ public class Player extends GameObject {
 	                setVelY(0);
 	                jumped = false;
 	            }
-
-	            // Kiểm tra va chạm từ phải
-	            if (getBoundsRight().intersects(pipe.getBounds())) {
-	                setX(pipe.getX() - getWidth());
-	            }
-
 	            // Kiểm tra va chạm từ trái
 	            if (getBoundsLeft().intersects(pipe.getBounds())) {
 	                setX(pipe.getX() + pipe.getWidth());
 
 	            }
+	            // Kiểm tra va chạm từ trên
+	            if (getBoundsTop().intersects(pipe.getBounds())) {
+	                setY(pipe.getY() + pipe.getHeight());
+	                setVelY(0);
+	            }
+	            // Kiểm tra va chạm từ phải
+	            if (getBoundsRight().intersects(pipe.getBounds())) {
+	                setX(pipe.getX() - getWidth());
+	            }
+
+	            
 	        }
 
 	        // Xử lý Goombas
-	        if ((temp.getId() == ObjectId.Goombas)||(temp.getId() == ObjectId.Nigga)||(temp.getId() == ObjectId.BossNigga)) {
+	        if ((temp.getId() == ObjectId.Goombas)||(temp.getId() == ObjectId.Nigga)) {
 	            if (getBounds().intersects(temp.getBoundsTop())) {
-	            	setVelY(-15);
+	            	setVelY(0);
 	                handler.removeObj(temp);
+	                gp.playSE(9);
 	                return;
 	            }
 	            if (getBoundsLeft().intersects(temp.getBoundsRight()))  {
 	            	setVelY(-15);
 	            	setVelX(5);
-	                if (damageCooldown == 0) { // Kiểm tra cooldown
-	                	gp.ui.updateHealth(1);
-	                	if (gp.ui.health <=0) {	
-	                        gp.gameState = gp.gameOverState;
-	                        gp.levelHandler.againLevel(1);
-	                    }
-	                    damageCooldown = 60; // Thời gian chờ (60 khung hình ~ 1 giây nếu FPS = 60)
-	                }
+	            	getDamagefromMonster ();
+	            	gp.playSE(8);
 	                return;
 	            }
 	            if (getBoundsRight().intersects(temp.getBoundsLeft()))  {
 	            	setVelY(-15);
 	            	setVelX(-5);
-	                if (damageCooldown == 0) { // Kiểm tra cooldown
-
-	                    gp.ui.updateHealth(1);
-	                    if (gp.ui.health <=0) {
-	                    	
-
-	                        gp.gameState = gp.gameOverState;
-	                        gp.levelHandler.againLevel(1);
-	                    }
-	                    damageCooldown = 60; // Thời gian chờ (60 khung hình ~ 1 giây nếu FPS = 60)
-	                }
+	            	getDamagefromMonster ();
+	            	gp.playSE(8);
 	                return;
 	            }
 	        }
+	        
+	        //BOSS
+	        if (temp.getId() == ObjectId.BossNigga) {
+	        	if (getBounds().intersects(temp.getBoundsTop())) {
+	        		gp.playSE(9);
+	            	setVelY(-20);
+	            	setVelX(-20);
+	            	gp.ui.bossHealth--;
+	            	if (gp.ui.bossHealth<=0) {
+	            		
+	            		gp.gameState=gp.winningState;
+	            		gp.stopMusic();
+	            		gp.playSE(7);
+	            	} 
+	                return;
+	            }
+	            if (getBoundsLeft().intersects(temp.getBoundsRight()))  {
+	            	setVelY(-15);
+	            	setVelX(10);
+	            	gp.playSE(8);
+	            	getDamagefromMonster ();
+	                return;
+	            }
+	            if (getBoundsRight().intersects(temp.getBoundsLeft()))  {
+	            	setVelY(-15);
+	            	setVelX(-10);
+	            	gp.playSE(8);
+	            	getDamagefromMonster ();
+	                return;
+	            }
+	        	
+	        }
 	    }
 	}
+	
+	public void getDamagefromBoss() {
+		
+	}
+	
+	public void getDamagefromMonster () {
+		 if (damageCooldown == 0) { // Kiểm tra cooldown
 
+             gp.ui.updateHealth(1);
+             if (gp.ui.health <=0) {
+             	
+
+                 gp.gameState = gp.gameOverState;
+                	 gp.levelHandler.againLevel(gp.levelHandler.currentLevel);
+                 
+                 
+             }
+             damageCooldown = 60; // Thời gian chờ (60 khung hình ~ 1 giây nếu FPS = 60)
+         }
+	}
 
 	public void drawCastleDialogue () {
 		 if (gp.ui.score >= 12) {
@@ -237,7 +308,7 @@ public class Player extends GameObject {
          	gp.levelHandler.nextLevel(); // Chuyển map
          } else if (gp.ui.score<12) {
          	gp.gameState = gp.dialogueState;
-         	gp.ui.currentDialogue ="You need to have 12 points";
+         	gp.ui.currentDialogue ="You need to have 12 keys";//gp.ui.currentDialogue ="You need to have 12 points";
          	gp.levelHandler.againLevel(1);
          }
 		
