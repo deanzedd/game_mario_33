@@ -15,8 +15,8 @@ import com.game.object.util.ObjectId;
 
 
 public class Nigga extends GameObject {
-	private static final float WIDTH = 16;
-	private static final float HEIGHT = 16;
+	private static final float WIDTH = 22;
+	private static final float HEIGHT = 22;
 	private Handler handler;
 	private Texture tex;
 	
@@ -79,7 +79,7 @@ public class Nigga extends GameObject {
 			if (temp.getId() == ObjectId.Block && getBoundsTop().intersects(temp.getBounds())) {
 				setY(temp.getY() + temp.getHeight());
 				setVelY(0);
-				((Block) temp).hit();
+				//((Block) temp).hit();
 				//removeBlocks.add((Block) temp);
 			} else {	
 				// xét xem có bị chạm dưới hay không

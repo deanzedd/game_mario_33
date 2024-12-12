@@ -59,7 +59,7 @@ public class Game extends Canvas implements Runnable {
     private Image background;
     
     //SOUND
-    Sound sound = new Sound();
+    public Sound sound = new Sound();
     
     //PLAYER
     Player player;
@@ -70,8 +70,8 @@ public class Game extends Canvas implements Runnable {
     }
     public void initialize() {
         gameState = titleState;
-        
         playMusic(0);
+        //playMusic(0);
     	try {
             ImageIcon icon = new ImageIcon(getClass().getResource("/tile/BACK3.png"));
             background = icon.getImage();
@@ -143,7 +143,7 @@ public class Game extends Canvas implements Runnable {
             
             if (System.currentTimeMillis() - timer > MILLIS_PER_SEC) {
                 timer += MILLIS_PER_SEC;
-                System.out.println("FPS: " + frames + " TPS: " + updates);
+                //System.out.println("FPS: " + frames + " TPS: " + updates);
                 updates = 0;
                 frames = 0;
             }
@@ -191,15 +191,18 @@ public class Game extends Canvas implements Runnable {
     }
     
     public void playMusic(int i) {
-    	sound.setFile(i);
+    	sound.setFileforMusic(i);
+    	System.out.println("Is playing music "+i);
     	sound.play();
     	sound.loop();
     }
-    public void stopMusic() {
+    public synchronized void  stopMusic() {
     	sound.stop();
+    	System.out.println("STOP MUSIC");
     }
     public void playSE(int i) {
-    	sound.setFile(i);
+    	System.out.println("Is playing SE "+i);
+    	sound.setFileforSE(i);
     	sound.play();
     }
     public boolean isPlayingSound () {
